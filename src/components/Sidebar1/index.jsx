@@ -26,6 +26,7 @@ const Sidebar1 = (props) => {
 
   useEffect(() => {
     const storedAvatar = localStorage.getItem("selectedAvatar");
+    console.log(fromTwo)
     if (storedAvatar) {
       setSelectedAvatar(storedAvatar);
     }
@@ -64,7 +65,7 @@ const Sidebar1 = (props) => {
           {fromTwo ? (
               <div className="grid place-items-center">
                 <Img
-                    src="images/img_avatarstyle07.png"
+                    src={fromTwo}
                     className="h-[200px] w-[200px] mt-[17px]"
                     alt="avatarstyleSeven"
                 />

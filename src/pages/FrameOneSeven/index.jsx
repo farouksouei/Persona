@@ -71,7 +71,7 @@ const FrameOneSevenPage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 fromtwo="" className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 fromTwo={selectedAvatar} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
