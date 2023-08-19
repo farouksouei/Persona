@@ -5,6 +5,7 @@ import { Button, Img, Text } from "components";
 
 const Sidebar1 = (props) => {
   const backgroundImage = "images/img_trac3091.png"; // Set the path to your background image
+  const fromTwo = props.fromTwo;
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const [selectedLink, setSelectedLink] = useState("");
   const links = [
@@ -60,23 +61,32 @@ const Sidebar1 = (props) => {
               </Text>
             </div>
           </Link>
-          {props.selectedAvatar || selectedAvatar ? (
-            <div className="grid place-items-center">
-              <Img
-                src={props.selectedAvatar || selectedAvatar}
-                className="h-[200px] w-[200px] mt-[17px]"
-                alt="avatarstyleSeven"
-              />
-            </div>
+          {fromTwo ? (
+              <div className="grid place-items-center">
+                <Img
+                    src="images/img_avatarstyle07.png"
+                    className="h-[200px] w-[200px] mt-[17px]"
+                    alt="avatarstyleSeven"
+                />
+              </div>
+          ) : props.selectedAvatar || selectedAvatar ? (
+              <div className="grid place-items-center">
+                <Img
+                    src={props.selectedAvatar || selectedAvatar}
+                    className="h-[200px] w-[200px] mt-[17px]"
+                    alt="avatarstyleSeven"
+                />
+              </div>
           ) : (
-            <div className="grid place-items-center">
-              <Img
-                src="images/img_avatarstyle07.png" // Default image source
-                className="h-[200px] w-[200px] mt-[17px]"
-                alt="avatarstyleSeven"
-              />
-            </div>
+              <div className="grid place-items-center">
+                <Img
+                    src="images/img_avatarstyle07.png" // Default image source
+                    className="h-[200px] w-[200px] mt-[17px]"
+                    alt="avatarstyleSeven"
+                />
+              </div>
           )}
+
 
           <div className="flex sm:flex-col flex-row gap-[50px] items-center justify-end ml-10 md:ml-[0] mt-[400px] w-[90%] md:w-full">
             {links.map((link) => (

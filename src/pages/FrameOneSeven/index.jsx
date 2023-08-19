@@ -8,6 +8,23 @@ const FrameOneSevenPage = () => {
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const sidebarAvatarRef = useRef(null);
 
+  const avatarStyles = [
+    "images/img_avatarstyle07.png",
+    "images/img_avatarstyle08.png",
+    "images/img_avatarstyle10.png",
+    "images/img_avatarstyle11.png",
+    "images/img_avatarstyle12.png",
+    "images/img_avatarstyle13.png",
+    "images/img_avatarstyle14.png",
+    "images/img_avatarstyle15.png",
+    "images/img_avatarstyle16.png",
+    "images/img_avatarstyle17.png",
+    "images/img_avatarstyle09.png",
+    "images/img_avatarstyle06.png",
+    "images/img_avatarstyle05.png",
+    "images/img_avatarstyle04.png",
+    "images/img_avatarstyle18.png",
+  ];
 
   const handleChange = (event) => {
     setName(event.target.value);
@@ -54,7 +71,7 @@ const FrameOneSevenPage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 fromtwo="" className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
@@ -93,112 +110,17 @@ const FrameOneSevenPage = () => {
                   Sélectionnez un avatar
                 </Text>
                 <div className="avatars gap-12 md:gap-5 grid sm:grid-cols-3 md:grid-cols-5 grid-cols-5 min-h-[auto] ml-1.5 md:ml-[0] mt-[23px] w-3/5">
-                  <Img
-                    src="images/img_avatarstyle07.png"
-                    className={`avatar (min-width: 40em) ${selectedAvatar === "images/img_avatarstyle07.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle07.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle08.png"
-                    className={`avatar (min-width: 40em) ${selectedAvatar === "images/img_avatarstyle08.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle08.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle10.png"
-                    className={`avatar (min-width: 40em) ${selectedAvatar === "images/img_avatarstyle10.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle10.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle11.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle11.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle11.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle12.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle12.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle12.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle13.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle13.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle13.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle14.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle14.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle14.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle15.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle15.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle15.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle16.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle16.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle16.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle17.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle17.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle17.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle09.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle09.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle09.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle06.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle06.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle06.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle05.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle05.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle05.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle04.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle04.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle04.png")}
-                  />
-                  <Img
-                    src="images/img_avatarstyle18.png"
-                    className={`avatar (min-width: 40em)  ${selectedAvatar === "images/img_avatarstyle18.png" ? "border-2 border-white-500" : ""
-                      }`}
-                    alt="avatarstyle"
-                    onClick={() => handleAvatarSelection("images/img_avatarstyle18.png")}
-                  />
-
+                  {avatarStyles.map((style, index) => (
+                      <Img
+                          key={index}
+                          src={style}
+                          className={`avatar (min-width: 40em) ${
+                              selectedAvatar === style ? "border-2 border-white-500" : ""
+                          }`}
+                          alt="avatarstyle"
+                          onClick={() => handleAvatarSelection(style)}
+                      />
+                  ))}
                 </div>
               </div>
             </div>

@@ -1,6 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "components";
 import Sidebar1 from "components/Sidebar1";
+import { Slider, Select, MenuItem, FormControl, InputLabel, ThemeProvider, createTheme } from '@mui/material';
+
+const theme = createTheme();
+
+const secteurActiviteOptions = [
+  "Vente",
+  "Comptabilité",
+  "Investissement",
+  "Commerce",
+  "Technologie",
+  "Publicité",
+  "Banque",
+  "Industrie pharmaceutique",
+  "Marketing",
+  "Artisanat",
+  "Transport",
+  "Immobilier",
+  "Santé",
+  "Assurance",
+  "Agriculture",
+  "Construction",
+  "Alimentation et besoin",
+];
 
 const FrameOneFourPage = () => {
   const [tailleEntreprise, setTaille] = useState("");
@@ -84,33 +107,24 @@ const FrameOneFourPage = () => {
                   Sélectionnez un secteur d&#39;activité.
                 </Text>
                 <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
-                  <select
-                    className="w-full bg-transparent "
-                    id="dropdown1"
-                    value={secteurActivite}
-                    onChange={handleChange}
-                  >
-                    <option disabled={!secteurActivite} defaultValue={!secteurActivite ? "default" : ""}>
-                      {secteurActivite || "Select an option"}
-                    </option>
-                    <option value="Vente">Vente</option>
-                    <option value="Comptabilié">Comptabilié</option>
-                    <option value="Investissement">Investissement</option>
-                    <option value="Commerce">Commerce</option>
-                    <option value="Technologie">Technologie</option>
-                    <option value="Publicité">Publicité</option>
-                    <option value="Banque">Banque</option>
-                    <option value="Industrie pharmaceutique">Industrie pharmaceutique</option>
-                    <option value="Marqueting">Marqueting</option>
-                    <option value="Artisanat">Artisanat</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Immobilier">Immobilier</option>
-                    <option value="santé">santé</option>
-                    <option value="Assurance">Assurance</option>
-                    <option value="Agricuture">Agricuture</option>
-                    <option value="Construction">Construction</option>
-                    <option value="Alimentation et besoin">Alimentation et besoin</option>
-                  </select>
+                  <ThemeProvider theme={theme}>
+                    <FormControl className="w-full">
+                      <InputLabel id="dropdown1-label">Secteur d'activité</InputLabel>
+                      <Select
+                          labelId="dropdown1-label"
+                          id="dropdown1"
+                          value={secteurActivite}
+                          onChange={handleChange}
+                      >
+                        {secteurActiviteOptions.map((option) => (
+                            <MenuItem key={option} value={option}>
+                              {option}
+                            </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </ThemeProvider>
+
                 </div>
                 <Text
                   className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
@@ -124,16 +138,16 @@ const FrameOneFourPage = () => {
                     <span>{tailleEntrepriseLabel[0]}</span>
                     <span>{tailleEntrepriseLabel[8]}</span>
                   </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="8"
-                    value={tailleEntreprise}
-                    step="1"
-                    className="w-full bg-transparent border-none outline-none"
-                    id="ageRange"
-                    onChange={handleTailleRangeChange}
-                  />
+                  <ThemeProvider theme={theme}>
+                    <Slider
+                        value={tailleEntreprise}
+                        onChange={handleTailleRangeChange}
+                        min={0}
+                        max={8}
+                        step={1}
+                        valueLabelDisplay="auto"
+                    />
+                  </ThemeProvider>
                   <div className="flex justify-between text-white_A700">
                     <span>{tailleEntrepriseLabel[tailleEntreprise]}</span>
                   </div>
