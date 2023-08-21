@@ -8,6 +8,7 @@ const Sidebar1 = (props) => {
   const fromTwo = props.fromTwo;
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const [selectedLink, setSelectedLink] = useState("");
+  const flag = props.flag;
   const links = [
     { path: "/frameonefour", label: "Frame One Seven" },
     { path: "/frameoneseven", label: "Frame One" },
@@ -88,8 +89,10 @@ const Sidebar1 = (props) => {
               </div>
           )}
 
-
-          <div className="flex sm:flex-col flex-row gap-[50px] items-center justify-end ml-10 md:ml-[0] mt-[400px] w-[90%] md:w-full">
+          <Text  className="flex sm:flex-col flex-row gap-[50px] items-center ml-10 md:ml-[0] mt-[150px] w-[90%] md:w-full text-2xl text-amber-50">
+            {flag}
+          </Text>
+          <div className="flex sm:flex-col flex-row gap-[50px] items-center justify-end ml-10 md:ml-[0] mt-[200px] w-[90%] md:w-full">
             {links.map((link) => (
               <Link
                 to={link.path}

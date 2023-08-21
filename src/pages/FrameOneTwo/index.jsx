@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Img, Line, Text } from "components";
 import Sidebar1 from "components/Sidebar1";
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import {TextField} from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
 const FrameOneTwoPage = () => {
   const [objectifPersona, setObjectif] = useState("");
@@ -8,13 +23,168 @@ const FrameOneTwoPage = () => {
   const [responsabilite, setResponsabilite] = useState("");
   const [defisOption, setDefisOption] = useState("");
   const [secteurActivite, setSelectedOption] = useState("");
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [objectifPersonaOption, setObjectifPersonaOption] = useState("");
+
+  const [selectedCategories, setSelectedCategories] = useState({
+    technology: [],
+    sports: [],
+    hobby: [],
+    shoppingAndFashion: [],
+    fitnessAndWellness: [],
+    familyAndRelationship: [],
+    entertainment: [],
+  });
+
+  const [challenges, setChallenges] = useState({
+    loseWeight: false,
+    improveFitness: false,
+    learnCooking: false,
+    reduceStress: false,
+  });
+
+  const handleChallengeChange = (challenge) => {
+    setChallenges((prevChallenges) => ({
+      ...prevChallenges,
+      [challenge]: !prevChallenges[challenge],
+    }));
+
+    // set it in local storage
+    localStorage.setItem("challenges", challenges);
+  };
+
+    const handleObjectifPersonaChange = (event) => {
+      setObjectifPersonaOption(event.target.value);
+        // set it in local storage
+        localStorage.setItem("objectifPersona", event.target.value);
+    }
+  const handleCategoryChange = (categoryTitle) => (newSelectedItems) => {
+    setSelectedItems((prevSelectedItems) => ({
+      ...prevSelectedItems,
+      [categoryTitle]: newSelectedItems,
+    }));
+
+    localStorage.setItem("H",selectedItems)
+  };
+
+  const categoryData = [
+    {
+      title: 'Technology',
+      items: [
+        'Computer Hardware',
+        'Computer Software',
+        'Consumer Electronics',
+        'Internet',
+        'Telecommunications',
+      ],
+    },
+    {
+      title: 'Sports',
+      items: [
+        'Sports',
+        'Sports Apparel',
+        'Sports Equipment & Accessories',
+        'Sports Teams & Leagues',
+        'Sports Venues',
+      ],
+    },
+    {
+      title: 'Hobby',
+      items: [
+        'Arts & Crafts',
+        'Beauty & Personal Care',
+        'Books & Literature',
+        'Celebrity Fan/Gossip',
+        'Fine Art',
+      ],
+    },
+    {
+      title: 'Shopping and Fashion',
+      items: [
+        'Apparel',
+        'Beauty',
+        'Fashion',
+        'Jewelry & Watches',
+        'Shopping',
+      ],
+    },
+    {
+      title: 'Fitness and Wellness',
+      items: [
+        'Fitness',
+        'Health',
+        'Nutrition',
+        'Wellness',
+      ],
+    },
+    {
+      title: 'Family and Relationship',
+      items: [
+        'Family & Parenting',
+        'Relationships',
+        'Weddings',
+        'Pets',
+      ],
+    },
+    {
+      title: 'Entertainment',
+      items: [
+        'Entertainment',
+        'Events',
+        'Film & Television',
+        'Humor',
+        'Music & Audio',
+        'Performing Arts',
+        'Visual Arts & Design',
+      ],
+    },
+  ];
 
 
+  const ExpandableCheckboxList = ({ title, items, selectedItems, onChange }) => {
+    const [open, setOpen] = useState(false);
 
+    const handleExpand = () => {
+      setOpen(!open);
+    };
 
+    const handleCheckboxChange = (item) => () => {
+      const newSelected = selectedItems.includes(item)
+          ? selectedItems.filter((selectedItem) => selectedItem !== item)
+          : [...selectedItems, item];
+      console.log(newSelected)
+      localStorage.setItem("new", newSelected);
+      onChange(newSelected);
+    };
 
-
-
+    return (
+        <List>
+          <ListItem onClick={handleExpand}>
+            <ListItemText primary={title} />
+            {open ? '-' : '+'}
+          </ListItem>
+          <Collapse in={true}>
+            {items.map((item) => (
+                <ListItem key={item}>
+                  <ListItemIcon>
+                    <Checkbox
+                        edge="start"
+                        checked={selectedItems.includes(item)}
+                        tabIndex={-1}
+                        disableRipple
+                        onChange={handleCheckboxChange(item)}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={item} />
+                </ListItem>
+            ))}
+          </Collapse>
+        </List>
+    );
+  };
+  const handleItemSelected = (event, setSelectedFunction) => {
+    setSelectedFunction(event.target.value);
+  };
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -81,9 +251,6 @@ const FrameOneTwoPage = () => {
     }
   }, [defis]);
 
-  const handleObjectifChange = (event) => {
-    setObjectif(event.target.value);
-  };
 
   useEffect(() => {
     const storedObjectif = localStorage.getItem("objectifPersona");
@@ -109,7 +276,7 @@ const FrameOneTwoPage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Une dernière question, allons-y !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div
             className="container-div flex flex-1 flex-col gap-[15px] justify-start md:mt-0 mt-[30px] w-full"
             style={{
@@ -134,379 +301,100 @@ const FrameOneTwoPage = () => {
                 >
                   Quels sont les objectifs du persona ?
                 </Text>
-                <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      className="font-normal text-white_A700 w-[420px] bg-transparent outline-none text-left"
-                      placeholder="Par exemple, en termes de prospects, de revenus, etc."
-                      style={{ border: "none" }}
-                      value={objectifPersona}
-                      onChange={handleObjectifChange}
-                      placeholderTextColor="white"
+
+                <FormControl fullWidth>
+                <TextField
+                    className=""
+                    id="outlined-multiline-static"
+                    label="Objectives"
+                    multiline
+                    rows={4}
+                    defaultValue="Default Value"
+                    variant="outlined"
+                    value={objectifPersonaOption}
+                    onChange={handleObjectifPersonaChange}
+                />
+                </FormControl>
+                <Text
+                    className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
+                    as="h5"
+                    variant="h5"
+                >
+
+                  Quels sont les défis du persona ?
+                </Text>
+                <FormControl>
+                  <FormGroup>
+                    <FormControlLabel
+                        control={
+                          <Checkbox
+                              checked={challenges.challenge1}
+                              onChange={() => handleChallengeChange('challenge1')}
+                          />
+                        }
+                        label="Challenge 1"
                     />
-                  </div>
-                  <Img
-                    src="images/img_crayon1.png"
-                    className="h-5 md:h-auto mb-[3px] object-cover w-5"
-                    alt="crayonOne"
-                  />
-                </div>
-                <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-full" />
-
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Quels sont ses plus grands défis ?
-                </Text>
-                <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-[20px]">
-                  <div className="flex flex-col font-librebaskerville  w-[100%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="relationClient"
-                          id="relationClient"
-                          value="Communications et relations avec les clients"
-                          checked={defis.includes(
-                            "Communications et relations avec les clients"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Communications et relations avec les clients
-                      </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start ">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="motivationSalaries"
-                          id="motivationSalaries"
-                          value="Motivation des salariés"
-                          checked={defis.includes("Motivation des salariés")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Motivation des salariés
-                      </Text>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col font-librebaskerville  w-[68%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="gestionChangement"
-                          id="gestionChangement"
-                          value="Gestion des changements"
-                          checked={defis.includes("Gestion des changements")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Gestion des changements
-                      </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start mt-[20px]">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="communicationInterne"
-                          id="communicationInterne"
-                          value="Communication interne"
-                          checked={defis.includes("Communication interne")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Communication interne
-                      </Text>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col font-librebaskerville  w-[68%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="resources"
-                          id="resources"
-                          value="Ressources"
-                          checked={defis.includes("Ressources")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Ressources
-                      </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start mt-[20px]">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="collaborationCreativité"
-                          id="collaborationCreativité"
-                          value="Collaboration et créativité"
-                          checked={defis.includes(
-                            "Collaboration et créativité"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Collaboration et créativité
-                      </Text>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col font-librebaskerville w-[68%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="gestionProjets"
-                          id="gestionProjets"
-                          value="Gestion des projets et organisation"
-                          checked={defis.includes(
-                            "Gestion des projets et organisation"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Gestion des projets et organisation
-                      </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start ">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="developpementPersonnel"
-                          id="developpementPersonnel"
-                          value="Développement professionnel"
-                          checked={defis.includes(
-                            "Développement professionnel"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Développement professionnel
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Queles sont ses responsabilités ?
-                </Text>
-                <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      className="font-normal text-white_A700 w-[420px] bg-transparent outline-none text-left"
-                      placeholder="Par exemple, en termes de prospects, de revenus, etc."
-                      style={{ border: "none" }}
-                      value={responsabilite}
-                      onChange={handleResponsabiliteChange}
+                    <FormControlLabel
+                        control={
+                          <Checkbox
+                              checked={challenges.challenge2}
+                              onChange={() => handleChallengeChange('challenge2')}
+                          />
+                        }
+                        label="Perdre du poids"
                     />
-                  </div>
-                  <Img
-                    src="images/img_crayon1.png"
-                    className="h-5 md:h-auto mb-[3px] object-cover w-5"
-                    alt="crayonOne"
-                  />
-                </div>
-                <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-full" />
-
-
+                    <FormControlLabel
+                        control={
+                          <Checkbox
+                              checked={challenges.challenge3}
+                              onChange={() => handleChallengeChange('challenge3')}
+                          />
+                        }
+                        label="Challenge 3"
+                    />
+                    <FormControlLabel
+                        control={
+                          <Checkbox
+                              checked={challenges.challenge4}
+                              onChange={() => handleChallengeChange('challenge4')}
+                          />
+                        }
+                        label="Améliorer sa forme physique"
+                    />
+                  </FormGroup>
+                </FormControl>
                 <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
+                  className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
                   as="h5"
                   variant="h5"
                 >
-                  Quels sont vos principaux centres d'intérêt ou hobbies ?
 
+                  Quels sont les centres d'interet de ce persona ?
                 </Text>
 
-                <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
-                  <select
-                    className="w-full bg-transparent "
-                    id="dropdown1"
-                    value={secteurActivite}
-                    onChange={handleChange}
+                <FormControl fullWidth>
+                  <InputLabel>Select Categories</InputLabel>
+                  <Select
+                      multiple
+                      value={Object.values(selectedItems).flat()}
+                      onChange={(event) => setSelectedItems(event.target.value)}
+                      renderValue={(selected) =>
+                          selected.length > 0
+                              ? selected.join(', ')
+                              : 'Select Categories'
+                      }
                   >
-                    <option disabled={!secteurActivite} defaultValue={!secteurActivite ? "default" : ""}>
-                      {secteurActivite || "Select an option"}
-                    </option>
-                    <option value="Business and industry "> Business and industry </option>
-                    <option value="Entertainment (leisure)">Entertainment (leisure)</option>
-                    <option value="Family and relationship">Family and relationship </option>
-                    <option value="Fitness and wellness (fitness)">Fitness and wellness (fitness)</option>
-                    <option value="Foods drinks (consumables)">Foods drinks (consumables) </option>
-                    <option value="Hobbies and activities">Hobbies and activities</option>
-                    <option value="Shopping and fashion ">Shopping and fashion </option>
-                    <option value="Sport and outdoors">Sport and outdoors</option>
-                    <option value="Technology (computers and electronics)">Technology (computers and electronics)</option>
-
-                  </select>
-                </div>
-
-
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-
-                  Business and industry
-                </Text>
-
-                <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-[20px]">
-                  <div className="flex flex-col font-librebaskerville  w-[100%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="relationClient"
-                          id="relationClient"
-                          value="Communications et relations avec les clients"
-                          checked={defis.includes(
-                            "Communications et relations avec les clients"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
+                    {categoryData.map((category) => (
+                        <ExpandableCheckboxList
+                            key={category.title}
+                            title={category.title}
+                            items={category.items}
+                            selectedItems={selectedItems[category.title] || []}
+                            onChange={handleCategoryChange(category.title)}
                         />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        advertising meaning                      </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start ">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="motivationSalaries"
-                          id="motivationSalaries"
-                          value="Motivation des salariés"
-                          checked={defis.includes("Motivation des salariés")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        agriculture (industry)                      </Text>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col font-librebaskerville  w-[68%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="gestionChangement"
-                          id="gestionChangement"
-                          value="Gestion des changements"
-                          checked={defis.includes("Gestion des changements")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-
-
-
-
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        architecture                   </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start ">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="developpementPersonnel"
-                          id="developpementPersonnel"
-                          value="Développement professionnel"
-                          checked={defis.includes(
-                            "Développement professionnel"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        aviation
-                      </Text>
-
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-
-
-
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
             </div>
             <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">

@@ -134,13 +134,8 @@ const FrameOneEightPage = () => {
                 <Line className="bg-white_A700 h-px w-[84%]" />
               </div>
             </div>
-
-
-
             <div className="flex sm:flex-col flex-row sm:gap-10 items-center justify-between md:ml-[0] ml-[3px] mt-1 w-full">
             </div>
-
-
             <a href="frameten">
               <button
                 className="bg-blue_gray_100 font-bebasneue h-[45px] justify-center md:ml-[0] ml-[190px] mt-44 pb-1.5 pt-0.5 sm:px-5 px-[35px] rounded-[5px] text-center text-indigo_900 w-[331px]"

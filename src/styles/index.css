@@ -204,7 +204,7 @@ ul li a{
   .grid-cols-5 {
     grid-template-columns: repeat(3, 1fr); /* Display 3 columns on small screens */
   }
-  
+
   .container-div{
     align-items: center;
     flex-direction: column;
@@ -266,18 +266,9 @@ ul li a{
   padding: 0;
   list-style: none;
   cursor: default;
-  
-  .active{
-    a{
-       -webkit-transform: scale3d(1.3, 1.3, 1.3);
-          transform: scale3d(1.3, 1.3, 1.3);
-      
-      &:after{
-      height: 100%;
-      }
-    }
-  }
-  
+
+
+
   li{
     position: relative;
     display: block;
@@ -286,7 +277,7 @@ ul li a{
     width: 20px;
     height: 20px;
     cursor: pointer;
-    
+
     a{
       top: 0;
       left: 0;
@@ -304,7 +295,7 @@ ul li a{
       transition: all 0.3s ease;
       -webkit-transform: scale3d(1, 1, 1);
       transform: scale3d(1, 1, 1);
-      
+
       &:after{
         content: '';
         position: absolute;

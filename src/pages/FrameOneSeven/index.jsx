@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { Img, Line, Text } from "components";
 import Sidebar1 from "components/Sidebar1";
+import { Typography, ThemeProvider, createTheme,TextField,InputLabel } from '@mui/material';
+
+const theme = createTheme();
 const FrameOneSevenPage = () => {
 
   const [name, setName] = useState("");
@@ -71,7 +74,7 @@ const FrameOneSevenPage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 fromTwo={selectedAvatar} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Ne baissons pas le rythme !"} fromTwo={selectedAvatar} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
@@ -84,24 +87,29 @@ const FrameOneSevenPage = () => {
                 </Text>
               </span>
               <div className="flex flex-col gap-[3px] items-start justify-start w-40% md:w-full">
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Nommez votre persona.
-                </Text>
-                <div>
-                  <input
-                    type="text"
-                    className="font-normal text-white_A700 w-[199px] bg-transparent outline-none text-left"
-                    placeholder="Saisir un nom"
-                    style={{ border: 'none' }}
-                    value={name}
-                    onChange={handleChange}
-                  />
-                  <Line className="bg-white_A700 h-px w-[84%]" />
-                </div>
+                <ThemeProvider theme={theme}>
+                  <Typography
+                      className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                      variant="h5"
+                      component="h5"
+                  >
+                    Nommez votre persona.
+                  </Typography>
+                </ThemeProvider>
+                <ThemeProvider theme={theme}>
+                  <div>
+                    <TextField
+                        type="text"
+                        variant="outlined"
+                        id="name-input"
+                        className="w-[199px] text-white_A700 text-left"
+                        placeholder="Saisir un nom"
+                        value={name}
+                        onChange={handleChange}
+                        InputProps={{ style: { border: 'none' } }}
+                    />
+                  </div>
+                </ThemeProvider>
                 <Text
                   className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
                   as="h5"

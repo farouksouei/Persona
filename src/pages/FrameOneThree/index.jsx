@@ -4,6 +4,9 @@ import Sidebar1 from "components/Sidebar1";
 
 const FrameOneOnePage = () => {
   const [informationsPersonnelles, setInformation] = useState("");
+  const [informationsPersonnelles2, setInformation2] = useState("");
+  const [informationsPersonnelles3, setInformation3] = useState("");
+  const [informationsPersonnelles4, setInformation4] = useState("");
   const [selectedIcons, setSelectedIcons] = useState([]);
 
   const handleIconClick = (iconSrc, iconName) => {
@@ -28,12 +31,41 @@ const FrameOneOnePage = () => {
 
   const handleInformationChange = (event) => {
     setInformation(event.target.value);
+    // set it in local storage
+    localStorage.setItem("informationsPersonnelles", event.target.value);
+  };
+
+  const handleInformationChange2 = (event) => {
+    setInformation2(event.target.value);
+    localStorage.setItem("informationsPersonnelles2", event.target.value);
+  };
+
+  const handleInformationChange3 = (event) => {
+    setInformation3(event.target.value);
+    localStorage.setItem("informationsPersonnelles3", event.target.value);
+  };
+
+  const handleInformationChange4 = (event) => {
+    setInformation4(event.target.value);
+    localStorage.setItem("informationsPersonnelles4", event.target.value);
   };
 
   useEffect(() => {
     const storedInformation = localStorage.getItem("informationsPersonnelles");
+    const storedInformation2 = localStorage.getItem("informationsPersonnelles2");
+    const storedInformation3 = localStorage.getItem("informationsPersonnelles3");
+    const storedInformation4 = localStorage.getItem("informationsPersonnelles4");
     if (storedInformation) {
       setInformation(storedInformation);
+    }
+    if (storedInformation2) {
+        setInformation2(storedInformation2);
+    }
+    if (storedInformation3) {
+        setInformation3(storedInformation3);
+    }
+    if (storedInformation4) {
+        setInformation4(storedInformation4);
     }
   }, []);
 
@@ -59,7 +91,7 @@ const FrameOneOnePage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Le fil d'arrivée est proche !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
@@ -112,8 +144,8 @@ const FrameOneOnePage = () => {
                       className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
                       placeholder=""
                       style={{ border: 'none' }}
-                      value={informationsPersonnelles}
-                      onChange={handleInformationChange}
+                      value={informationsPersonnelles2}
+                      onChange={handleInformationChange2}
                     />
                     <Img
                       src="images/img_crayon1.png"
@@ -136,8 +168,8 @@ const FrameOneOnePage = () => {
                         className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
                         placeholder=""
                         style={{ border: 'none' }}
-                        value={informationsPersonnelles}
-                        onChange={handleInformationChange}
+                        value={informationsPersonnelles3}
+                        onChange={handleInformationChange3}
                       />
                       <Img
                         src="images/img_crayon1.png"
@@ -160,8 +192,8 @@ const FrameOneOnePage = () => {
                           className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
                           placeholder=""
                           style={{ border: 'none' }}
-                          value={informationsPersonnelles}
-                          onChange={handleInformationChange}
+                          value={informationsPersonnelles4}
+                          onChange={handleInformationChange4}
                         />
                         <Img
                           src="images/img_crayon1.png"

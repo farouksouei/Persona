@@ -23,7 +23,19 @@ const FrameTen = () => {
   const [showSecondDiv, setShowSecondDiv] = useState(false);
   const [selectedCommunication, setSelectedCommunication] = useState([]);
   const [defisOption, setDefisOption] = useState("");
-
+  const [informationsPersonnelles2, setInformation2] = useState("");
+  const [informationsPersonnelles3, setInformation3] = useState("");
+  const [informationsPersonnelles4, setInformation4] = useState("");
+  const [comportement, setComportement] = useState("");
+  const [optionDefis, setOption] = useState("");
+  const [anniversaire, setAnniversaire] = React.useState('');
+  const [expatrie, setExpatrie] = React.useState('');
+  const [football, setFootball] = React.useState('');
+  const [useMobile, setUseMobile] = React.useState('');
+  const [systemeExploitationMobile, setSystemeExploitationMobile] = React.useState('');
+  const [childrenAges,setChildrenAges] = useState('')
+  const [hasChildren, setHasChildren] = React.useState(false);
+  const [situation, setSituation] = React.useState('');
   useEffect(() => {
     const storedDefisOption = localStorage.getItem("defisOption");
     if (storedDefisOption) {
@@ -73,8 +85,56 @@ const FrameTen = () => {
 
   useEffect(() => {
     const storedInformation = localStorage.getItem("informationsPersonnelles");
+    const storedInformation2 = localStorage.getItem("informationsPersonnelles2");
+    const storedInformation3 = localStorage.getItem("informationsPersonnelles3");
+    const storedInformation4 = localStorage.getItem("informationsPersonnelles4");
+    const storedComportement = localStorage.getItem("comportement");
+    const storedAnniversaire = localStorage.getItem("anniversaire");
+    const storedExpatrie = localStorage.getItem("expatrie");
+    const storedFootball = localStorage.getItem("football");
+    const storedUseMobile = localStorage.getItem("useMobile");
+    const storedSystemeExploitationMobile = localStorage.getItem("systemeExploitationMobile");
+    const storedChildrenAges = localStorage.getItem("childrenAges");
+    const storedHasChildren = localStorage.getItem("hasChildren");
+    const storedSituation = localStorage.getItem("situation");
+    if (storedChildrenAges) {
+        setChildrenAges(storedChildrenAges);
+    }
+    if (storedHasChildren) {
+        setHasChildren(storedHasChildren);
+    }
+    if (storedSituation) {
+        setSituation(storedSituation);
+    }
+    if (storedComportement) {
+        setComportement(storedComportement);
+    }
+    if (storedAnniversaire) {
+        setAnniversaire(storedAnniversaire);
+    }
+    if (storedExpatrie) {
+        setExpatrie(storedExpatrie);
+    }
+    if (storedFootball) {
+        setFootball(storedFootball);
+    }
+    if (storedUseMobile) {
+        setUseMobile(storedUseMobile);
+    }
+    if (storedSystemeExploitationMobile) {
+        setSystemeExploitationMobile(storedSystemeExploitationMobile);
+    }
     if (storedInformation) {
       setInformation(storedInformation);
+    }
+    if (storedInformation2) {
+        setInformation2(storedInformation2);
+    }
+    if (storedInformation3) {
+        setInformation3(storedInformation3);
+    }
+    if (storedInformation4) {
+        setInformation4(storedInformation4);
     }
   }, []);
 
@@ -297,6 +357,7 @@ const FrameTen = () => {
 
   const exportPDF = () => {
     const input = document.getElementById("FrameTen");
+    const input2 = document.getElementById("FrameTenTwo");
 
     // Set the dimensions to emulate a desktop view
     const desktopWidth = 1440;
@@ -304,24 +365,37 @@ const FrameTen = () => {
     window.innerWidth = desktopWidth;
     window.innerHeight = desktopHeight;
 
-    html2canvas(input, { logging: true, letterRendering: 1, useCORS: true }).then(canvas => {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = pdf.internal.pageSize.getWidth();
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const scalingFactor = 1.2;
-      const imgData = canvas.toDataURL('image/png');
-      const topMargin = 40;
+    html2canvas(input, { logging: true, letterRendering: 1, useCORS: true }).then(canvas1 => {
+      html2canvas(input2, { logging: true, letterRendering: 1, useCORS: true }).then(canvas2 => {
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = pdf.internal.pageSize.getWidth();
+        const imgHeight = (canvas1.height * imgWidth) / canvas1.width;
+        const scalingFactor = 1.2;
+        const imgData1 = canvas1.toDataURL('image/png');
+        const imgData2 = canvas2.toDataURL('image/png');
+        const topMargin = 40;
 
-      pdf.addImage(imgData, 'PNG', -20, topMargin, imgWidth * scalingFactor, imgHeight * scalingFactor);
+        const pageContents = [
+          { image: imgData1, x: -20, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * scalingFactor },
+          { image: imgData2, x: 0, y: topMargin, width: imgWidth * 0.25, height: imgHeight * 0.9 },
+        ];
 
-      // Add background image
-      const backgroundImage = 'images/img_clippathgroup.png'; // Replace with the path to your background image
-      pdf.addImage(backgroundImage, 'PNG', 100, pdf.internal.pageSize.getHeight() - 40, 20, 20); // Add the background image to the PDF
-      const fileName = name || "persona";
-      pdf.save(`${fileName}.pdf`);
-      deleteLocalStorageItems();
+        // Loop through each page content and add it to the PDF
+        pageContents.forEach((content, index) => {
+          pdf.addImage(content.image, 'PNG', content.x, content.y, content.width, content.height);
+          if (index !== pageContents.length - 1) {
+            pdf.addPage(); // Add a new page for the next content
+          }
+        });
+
+        // Save the PDF
+        const fileName = name || "persona";
+        pdf.save(`${fileName}.pdf`);
+        deleteLocalStorageItems();
+      });
     });
   };
+
 
 
 
@@ -455,11 +529,35 @@ const FrameTen = () => {
                   >
                     {ageRangeLabels[ageRange]}
                   </Text>
+                  <Text
+                    className="md:ml-[0] mt-3 text-base text-center text-indigo-600"
+                    size="txtLibreBaskervilleRegular16"
+                    >
+                    Situation familiale : {situation}
+                    </Text>
+                  {hasChildren && (
+                    <>
+                        <Line className="bg-indigo-100_01 h-px mt-3.5 w-full" />
+                        <Text
+                            className="md:ml-[0] mt-[7px] text-base text-center text-indigo-600"
+                            size="txtLibreBaskervilleRegular16"
+                        >
+                            Enfants
+                        </Text>
+                        <Text
+                            className="md:ml-[0]mt-3 text-base text-center text-indigo-600_77"
+                            size="txtLibreBaskervilleRegular16Indigo60077"
+                        >
+                            {childrenAges}
+                        </Text>
+                    </>
+                  )}
                   <Line className="bg-indigo-100_01 h-px mt-3.5 w-full" />
                   <Text
                     className="md:ml-[0] mt-[7px] text-base text-center text-indigo-600"
                     size="txtLibreBaskervilleRegular16"
                   >
+                    €
                     <>Niveau d&#39;études</>
                   </Text>
                   <Text
@@ -567,23 +665,6 @@ const FrameTen = () => {
                           </Text>
                         )}
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                        <Text
-                          className="max-w-[300px] md:max-w-full text-base text-indigo-600"
-                          size="txtLibreBaskervilleRegular16"
-                        >
-                          Indicateur de performances
-                        </Text>
-                        <input
-                          type="text"
-                          className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
-                          size="txtLibreBaskervilleRegular16Indigo60077"
-                          placeholder="Saisir un indicateur "
-                          style={{ border: 'none' }}
-                          value={indicateurPerformance}
-                          onChange={handlePerforamnceChange}
-                        />
-                      </div>
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
@@ -636,6 +717,74 @@ const FrameTen = () => {
                           onChange={handleInformationChange}
                         />
                       </div>
+                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                        <Text
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                            size="txtLibreBaskervilleRegular16"
+                        >
+                          Quelle est la station de radio que votre persona écoute ?
+                        </Text>
+                        <input
+                            type="text"
+                            className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                            size="txtLibreBaskervilleRegular16Indigo60077"
+                            style={{ border: 'none' }}
+                            value={informationsPersonnelles2}
+                            disabled={true}
+                        />
+                      </div>
+                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                        <Text
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100"
+                            size="txtLibreBaskervilleRegular16"
+                        >
+                          Quelle est la chaîne de télévision que votre persona regarde ?
+                        </Text>
+                        <input
+                            type="text"
+                            className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                            size="txtLibreBaskervilleRegular16Indigo60077"
+                            style={{ border: 'none' }}
+                            value={informationsPersonnelles3}
+                            disabled={true}
+                        />
+                      </div><div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+
+                      <Text
+                          className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                          size="txtLibreBaskervilleRegular16"
+                      >
+                        Quels sont les médias digitaux que votre persona suit ?
+                      </Text>
+                      <input
+                          type="text"
+                          className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                          size="txtLibreBaskervilleRegular16Indigo60077"
+                          style={{ border: 'none' }}
+                          value={informationsPersonnelles4}
+                          disabled={true}
+                      />
+                    </div>
+                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                        <Text
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100"
+                            size="txtLibreBaskervilleRegular16"
+                        >
+                            Quels sont les médias digitaux que votre persona suit ?
+                        </Text>
+                        <input
+                            type="text"
+                            className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                            size="txtLibreBaskervilleRegular16Indigo60077"
+                            style={{ border: 'none' }}
+                            value={informationsPersonnelles3}
+                            disabled={true}
+                        />
+                      </div>
+                      <div
+                          id="FrameTenTwo"
+                          className="sm:h-[1209px] h-[1375px] md:h-[2553px] md:px-5 relative w-full"
+                      >
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
@@ -671,30 +820,32 @@ const FrameTen = () => {
                       </div>
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
-                          className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                          size="txtLibreBaskervilleRegular16"
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                            size="txtLibreBaskervilleRegular16"
                         >
-                          Moyen de communication préféré
+                          systeme Exploitation de telephone
                         </Text>
-                        {selectedCommunication.length > 0 ? (
-                          // Render the text based on the state value
-                          selectedCommunication.map((icon) => (
-                            <Text
-                              className="text-base text-indigo-600_77 w-[200px]"
-                              size="txtLibreBaskervilleRegular16Indigo60077"
-                            >
-                              {icon.name}
-                            </Text>
-                          ))
-                        ) : (
-                          <Text
+                        <Text
                             className="text-base text-indigo-600_77 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
-                          >
-                            Tu dois sélectionner les moyen de communication
-                          </Text>
-                        )}
+                        >
+                          {systemeExploitationMobile}
+                        </Text>
+                      </div>
 
+                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                        <Text
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                            size="txtLibreBaskervilleRegular16"
+                        >
+                          utilization de telephone portable
+                        </Text>
+                        <Text
+                            className="text-base text-indigo-600_77 w-[200px]"
+                            size="txtLibreBaskervilleRegular16Indigo60077"
+                        >
+                          {useMobile}
+                        </Text>
                       </div>
 
                     </div>
@@ -720,7 +871,7 @@ const FrameTen = () => {
                       Ajouter Une Section +
                     </Text>
                   </div>
-
+                  </div>
                 </div>
 
               </div>

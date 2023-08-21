@@ -468,6 +468,24 @@ const PDFContent=()=>{
                           onChange={handlePerforamnceChange}
                         />
                       </div>
+                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                        <Text
+                            className="max-w-[300px] md:max-w-full text-base text-indigo-600"
+                            size="txtLibreBaskervilleRegular16"
+                        >
+                          Indicateur de performances
+                        </Text>
+                        <input
+                            type="text"
+                            className="text-base text-indigo-600_77 w-[250px] bg-blue_gray-100"
+                            size="txtLibreBaskervilleRegular16Indigo60077"
+                            placeholder="Saisir un indicateur "
+                            style={{ border: 'none' }}
+                            value={indicateurPerformance}
+                            onChange={handlePerforamnceChange}
+                        />
+                      </div>
+
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"

@@ -1,14 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "components";
 import Sidebar1 from "components/Sidebar1";
+import {
+  Slider,
+  Typography,
+  ThemeProvider,
+  createTheme,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  TextField, RadioGroup, FormControlLabel, Radio
+} from '@mui/material';
+
+const theme = createTheme();
 
 const FrameOnePage = () => {
   const [ageRange, setAgeRange] = useState("");
   const [etudeRange, setEtudeRange] = useState(""); // Add setEtudeRange state function
   const [secteurActivite, setSelectedOption] = useState("");
   const [defis, setDefis] = useState([]);
+  const [showChildrenForm, setShowChildrenForm] = React.useState(false);
+  const [hasChildren, setHasChildren] = React.useState(false);
+  const [showChildrenForm2, setShowChildrenForm2] = React.useState(false);
+  const [childrenNumber, setChildrenNumber] = React.useState(0);
+  const [childrenAges,setChildrenAges] = useState('')
 
 
+  const arrayyy = [
+      "Divorcé",
+      "Marié",
+      "Pacsé",
+      "Séparé",
+      "Veuf",
+      ];
 
 
   const handleCheckboxChange = (event) => {
@@ -24,11 +49,59 @@ const FrameOnePage = () => {
     }
   };
 
+  const handleHasChildrenChange = (event) => {
+    const isChecked = event.target.value;
 
+    console.log(isChecked)
+    if (isChecked === "yes") {
+      setHasChildren("yes");
+      setShowChildrenForm2(true);
+    } else {
+      setHasChildren("no");
+      setShowChildrenForm2(false);
+    }
+    //put it in local storage
+    localStorage.setItem("hasChildren", event.target.value);
+  }
+
+  const answers2 = [
+      "Parents avec enfants en bas âge (1-2 ans)",
+      "Parents avec enfants de 6 à 8 ans",
+      "Parents avec enfants de 13 à 17 ans",
+      "Parents avec enfants de +18 ans Adultes",
+      ]
+
+  const handleOnChangeChildrenAges = (event) => {
+      setChildrenAges(event.target.value)
+      //put it in local storage
+        localStorage.setItem("childrenAges", event.target.value);
+  }
+
+  const [selectedAnswer, setSelectedAnswer] = React.useState('');
+
+  const handleAnswerChange = (event) => {
+    setSelectedAnswer(event.target.value);
+  };
 
   const handleChange = (event) => {
+    // if event value is in the array show the children form
+    if (arrayyy.includes(event.target.value)) {
+        setShowChildrenForm(true);
+    } else {
+        setShowChildrenForm(false);
+        setShowChildrenForm2(false)
+    }
     setSelectedOption(event.target.value);
+    //put it in local storage
+    localStorage.setItem("situation", event.target.value);
   };
+
+  const handleChildrenChange = (event) => {
+    // add form validation that the number is between 0 and 10
+    setChildrenNumber(event.target.value);
+    //put it in local storage
+
+  }
 
   const handleAgeRangeChange = (event) => {
     const rangeValue = parseInt(event.target.value);
@@ -50,7 +123,30 @@ const FrameOnePage = () => {
     if (ageRange !== "") {
       localStorage.setItem("ageRange", ageRange);
     }
-  }, [ageRange]);
+    const storedSituation = localStorage.getItem("situation");
+    const storedChildrenNumber = localStorage.getItem("childrenNumber");
+    const storedChildrenAges = localStorage.getItem("childrenAges");
+    const storedHasChildren = localStorage.getItem("hasChildren");
+    if (storedSituation) {
+        setSelectedOption(storedSituation);
+        if (arrayyy.includes(storedSituation)) {
+            setShowChildrenForm(true);
+        } else {
+            setShowChildrenForm(false);
+        }
+    }
+    if (storedHasChildren === "yes") {
+        setHasChildren("yes");
+        setShowChildrenForm2(true);
+    } else {
+        setHasChildren("no");
+        setShowChildrenForm2(false);
+    }
+
+    if (storedChildrenAges) {
+        setChildrenAges(storedChildrenAges);
+    }
+  }, [ageRange, secteurActivite]);
 
   useEffect(() => {
     const storedEtudeRange = localStorage.getItem("niveauEtude");
@@ -92,7 +188,7 @@ const FrameOnePage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Le fil arrivée est proche !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
@@ -112,25 +208,25 @@ const FrameOnePage = () => {
                 >
                   Sélectionnez une tranche d'âge.
                 </Text>
-                <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
-                  <div className="range-labels flex justify-between text-white_A700">
-                    <span>{ageRangeLabels[0]}</span>
-                    <span>{ageRangeLabels[5]}</span>
+                <ThemeProvider theme={theme}>
+                  <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
+                    <div className="range-labels flex justify-between text-white_A700">
+                      <span className="text-indigo_900">{ageRangeLabels[0]}</span>
+                      <span className="text-indigo_900">{ageRangeLabels[5]}</span>
+                    </div>
+                    <Slider
+                        value={ageRange}
+                        onChange={handleAgeRangeChange}
+                        min={0}
+                        max={5}
+                        step={1}
+                        valueLabelDisplay="auto"
+                    />
+                    <div className="flex justify-between text-white_A700">
+                      <Typography className="text-indigo_900">{ageRangeLabels[ageRange]}</Typography>
+                    </div>
                   </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="5"
-                    value={ageRange}
-                    step="1"
-                    className="w-full bg-transparent border-none outline-none"
-                    id="ageRange"
-                    onChange={handleAgeRangeChange}
-                  />
-                  <div className="flex justify-between text-white_A700">
-                    <span>{ageRangeLabels[ageRange]}</span>
-                  </div>
-                </div>
+                </ThemeProvider>
                 <Text
                   className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
                   as="h5"
@@ -139,110 +235,106 @@ const FrameOnePage = () => {
                   Quelle est la situation matrimoniale de votre persona ?
                 </Text>
 
-                <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
-                  <select
-                    className="w-full bg-transparent "
-                    id="dropdown1"
-                    value={secteurActivite}
-                    onChange={handleChange}
-                  >
-                    <option disabled={!secteurActivite} defaultValue={!secteurActivite ? "default" : ""}>
-                      {secteurActivite || "Select an option"}
-                    </option>
-                    <option value="Célebataire">Célebataire </option>
-                    <option value="C'est compliqué">C'est compliqué</option>
-                    <option value="Dans une relation libre">Dans une relation libre </option>
-                    <option value="Divorcé">Divorcé</option>
-                    <option value="En couple">En couple </option>
-                    <option value="Fiancé">Fiancé</option>
-                    <option value="Marié">Marié</option>
-                    <option value="Non spécifiée">Non spécifiée</option>
-                    <option value="Séparé">Séparé</option>
-                    <option value="Veuf">Veuf</option>
-
-                  </select>
-                </div>
-
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Quelle est la situation matrimoniale de votre persona ?
-                </Text>
-
-                <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-[20px]">
-                  <div className="flex flex-col font-librebaskerville  w-[100%] md:w-full">
-                    <div className="flex flex-row items-start">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="relationClient"
-                          id="relationClient"
-                          value="oui"
-                          checked={defis.includes(
-                            "oui"
-                          )}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
+                <ThemeProvider theme={theme}>
+                  <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
+                    <FormControl className="w-full">
+                      <InputLabel id="dropdown1-label">Choisir une option</InputLabel>
+                      <Select
+                          labelId="dropdown1-label"
+                          id="dropdown1"
+                          value={secteurActivite}
+                          onChange={handleChange}
                       >
-                        Oui
-                      </Text>
-                    </div>
-
-                    <div className="flex flex-row items-start ">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          name="relationClient"
-                          id="relationClient"
-                          value="non"
-                          checked={defis.includes("non")}
-                          onChange={handleCheckboxChange}
-                          className="checkbox-input"
-                        />
-                      </div>
-                      <Text
-                        className="ml-[25px] text-white_A700"
-                        variant="body2"
-                      >
-                        Non
-                      </Text>
-                    </div>
+                        <MenuItem disabled={!secteurActivite} value="">
+                          {secteurActivite || 'Select an option'}
+                        </MenuItem>
+                        <MenuItem value="Célibataire">Célibataire</MenuItem>
+                        <MenuItem value="C'est compliqué">C'est compliqué</MenuItem>
+                        <MenuItem value="Dans une relation libre">Dans une relation libre</MenuItem>
+                        <MenuItem value="Divorcé">Divorcé</MenuItem>
+                        <MenuItem value="En couple">En couple</MenuItem>
+                        <MenuItem value="Fiancé">Fiancé</MenuItem>
+                        <MenuItem value="Marié">Marié</MenuItem>
+                        <MenuItem value="Non spécifiée">Non spécifiée</MenuItem>
+                        <MenuItem value="Séparé">Séparé</MenuItem>
+                        <MenuItem value="Veuf">Veuf</MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
+                </ThemeProvider>
 
-
-                </div>
+                {showChildrenForm && (
+                    <>
+                    <Text
+                        className="font-normal text-indigo_900 mt-4"
+                        as="h5"
+                        variant="h5"
+                    >
+                      est ce que vous avez des enfants??
+                    </Text>
+                      <FormControl className="mt-4 w-[199px]">
+                        <RadioGroup value={hasChildren} onChange={handleHasChildrenChange}>
+                          <FormControlLabel value="yes" control={<Radio />} label="Oui" />
+                          <FormControlLabel value="no" control={<Radio />} label="Non" />
+                        </RadioGroup>
+                      </FormControl>
+                    </>
+                )}
+                {showChildrenForm2 && (
+                    <>
+                      <Text
+                          className="font-normal text-indigo_900 mt-4"
+                          as="h5"
+                          variant="h5"
+                      >
+                        est ce que vous avez des enfants??
+                      </Text>
+                      <FormControl className="mt-4 w-[199px]">
+                        <InputLabel id="childrenAges">Ages des enfants</InputLabel>
+                        <Select
+                            labelId="childrenAges"
+                            id="childrenAges"
+                            value={childrenAges}
+                            onChange={handleOnChangeChildrenAges}
+                        >
+                          <MenuItem disabled={!childrenAges} value="">
+                            {childrenAges || 'Select an option'}
+                          </MenuItem>
+                          <MenuItem value="Parents avec enfants en bas âge (1-2 ans)">Parents avec enfants en bas âge (1-2 ans)</MenuItem>
+                          <MenuItem value="Parents avec enfants de 6 à 8 ans">Parents avec enfants de 6 à 8 ans</MenuItem>
+                          <MenuItem value="Parents avec enfants de 13 à 17 ans">Parents avec enfants de 13 à 17 ans</MenuItem>
+                          <MenuItem value="Parents avec enfants de +18 ans Adultes">Parents avec enfants de +18 ans Adultes</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </>
+                )}
               </div>
-              <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">
-                <a href="frameoneseven">
-                  <Text
-                    className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-1.5 rounded-[10px] text-blue_gray_400_01 text-center w-10"
-                    as="h2"
-                    variant="h2"
-                  >
-                    <>&lt;</>
-                  </Text>
-                </a>
-                <a href="/frameoneone">
-                  <Text
+
+
+            </div>
+
+
+            <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">
+              <Text
+                  className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-1.5 rounded-[10px] text-blue_gray_400_01 text-center w-10"
+                  as="h2"
+                  variant="h2"
+              >
+                <>&lt;</>
+              </Text>
+              <a href="/frameoneone">
+                <Text
                     className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-[11px] rounded-[10px] text-blue_gray_400 text-center w-10"
                     as="h2"
                     variant="h2"
-                  >
-                    <>&gt;</>
-                  </Text>
-                </a>
-              </div>
+                >
+                  <>&gt;</>
+                </Text>
+              </a>
             </div>
           </div>
+          </div>
         </div>
-      </div>
 
     </>
   );
