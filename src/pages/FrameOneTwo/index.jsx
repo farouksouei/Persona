@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Img, Line, Text } from "components";
+import { Text } from "components";
 import Sidebar1 from "components/Sidebar1";
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
 import {TextField} from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Collapse from '@mui/material/Collapse';
+import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
 
 const FrameOneTwoPage = () => {
   const [objectifPersona, setObjectif] = useState("");
@@ -23,9 +21,11 @@ const FrameOneTwoPage = () => {
   const [responsabilite, setResponsabilite] = useState("");
   const [defisOption, setDefisOption] = useState("");
   const [secteurActivite, setSelectedOption] = useState("");
-  const [selectedItems, setSelectedItems] = useState([]);
   const [objectifPersonaOption, setObjectifPersonaOption] = useState("");
-
+  const [selectedTitles, setSelectedTitles] = useState([]);
+  const [allSelectedTitles, setAllSelectedTitles] = useState([]);
+  const [expandedCategory, setExpandedCategory] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState({
     technology: [],
     sports: [],
@@ -35,6 +35,20 @@ const FrameOneTwoPage = () => {
     familyAndRelationship: [],
     entertainment: [],
   });
+  const handleTitleChange = (title) => (event) => {
+    if (event.target.checked) {
+      setSelectedTitles((prevTitles) => [...prevTitles, title]);
+    } else {
+      setSelectedTitles((prevTitles) => prevTitles.filter((prevTitle) => prevTitle !== title));
+    }
+  };
+
+  useEffect(() => {
+    console.log(selectedTitles);
+    if (selectedTitles.length > 0) {
+      localStorage.setItem("selectedTitles", JSON.stringify(selectedTitles));
+    }
+  }, [selectedTitles]);
 
   const [challenges, setChallenges] = useState({
     loseWeight: false,
@@ -48,7 +62,7 @@ const FrameOneTwoPage = () => {
       ...prevChallenges,
       [challenge]: !prevChallenges[challenge],
     }));
-
+    console.log(challenges)
     // set it in local storage
     localStorage.setItem("challenges", challenges);
   };
@@ -58,129 +72,66 @@ const FrameOneTwoPage = () => {
         // set it in local storage
         localStorage.setItem("objectifPersona", event.target.value);
     }
-  const handleCategoryChange = (categoryTitle) => (newSelectedItems) => {
-    setSelectedItems((prevSelectedItems) => ({
-      ...prevSelectedItems,
-      [categoryTitle]: newSelectedItems,
-    }));
+    const titleItems = [
+        "Technology",
+        "Sports",
+        "Hobby",
+        "Shopping & Fashion",
+        "Fitness & Wellness",
+        "Family & Relationship",
+        "Entertainment",
+        ];
 
-    localStorage.setItem("H",selectedItems)
-  };
-
-  const categoryData = [
-    {
-      title: 'Technology',
-      items: [
-        'Computer Hardware',
-        'Computer Software',
-        'Consumer Electronics',
-        'Internet',
-        'Telecommunications',
-      ],
-    },
-    {
-      title: 'Sports',
-      items: [
-        'Sports',
-        'Sports Apparel',
-        'Sports Equipment & Accessories',
-        'Sports Teams & Leagues',
-        'Sports Venues',
-      ],
-    },
-    {
-      title: 'Hobby',
-      items: [
-        'Arts & Crafts',
-        'Beauty & Personal Care',
-        'Books & Literature',
-        'Celebrity Fan/Gossip',
-        'Fine Art',
-      ],
-    },
-    {
-      title: 'Shopping and Fashion',
-      items: [
-        'Apparel',
-        'Beauty',
-        'Fashion',
-        'Jewelry & Watches',
-        'Shopping',
-      ],
-    },
-    {
-      title: 'Fitness and Wellness',
-      items: [
-        'Fitness',
-        'Health',
-        'Nutrition',
-        'Wellness',
-      ],
-    },
-    {
-      title: 'Family and Relationship',
-      items: [
-        'Family & Parenting',
-        'Relationships',
-        'Weddings',
-        'Pets',
-      ],
-    },
-    {
-      title: 'Entertainment',
-      items: [
-        'Entertainment',
-        'Events',
-        'Film & Television',
-        'Humor',
-        'Music & Audio',
-        'Performing Arts',
-        'Visual Arts & Design',
-      ],
-    },
-  ];
-
-
-  const ExpandableCheckboxList = ({ title, items, selectedItems, onChange }) => {
-    const [open, setOpen] = useState(false);
-
-    const handleExpand = () => {
-      setOpen(!open);
-    };
-
-    const handleCheckboxChange = (item) => () => {
-      const newSelected = selectedItems.includes(item)
-          ? selectedItems.filter((selectedItem) => selectedItem !== item)
-          : [...selectedItems, item];
-      console.log(newSelected)
-      localStorage.setItem("new", newSelected);
-      onChange(newSelected);
-    };
-
-    return (
-        <List>
-          <ListItem onClick={handleExpand}>
-            <ListItemText primary={title} />
-            {open ? '-' : '+'}
-          </ListItem>
-          <Collapse in={true}>
-            {items.map((item) => (
-                <ListItem key={item}>
-                  <ListItemIcon>
-                    <Checkbox
-                        edge="start"
-                        checked={selectedItems.includes(item)}
-                        tabIndex={-1}
-                        disableRipple
-                        onChange={handleCheckboxChange(item)}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={item} />
-                </ListItem>
-            ))}
-          </Collapse>
-        </List>
-    );
+  const categories = {
+    Technology: [
+      'Computer Hardware',
+      'Computer Software',
+      'Consumer Electronics',
+      'Internet',
+      'Telecommunications',
+    ],
+    Sports: [
+      'Sports',
+      'Sports Apparel',
+      'Sports Equipment & Accessories',
+      'Sports Teams & Leagues',
+      'Sports Venues',
+    ],
+    Hobby: [
+      'Arts & Crafts',
+      'Beauty & Personal Care',
+      'Books & Literature',
+      'Celebrity Fan/Gossip',
+      'Fine Art',
+    ],
+    ShoppingAndFashion: [
+      'Apparel',
+      'Beauty',
+      'Fashion',
+      'Jewelry & Watches',
+      'Shopping',
+    ],
+    FitnessAndWellness: [
+      'Fitness',
+      'Health',
+      'Nutrition',
+      'Wellness',
+    ],
+    FamilyAndRelationship: [
+      'Family & Parenting',
+      'Relationships',
+      'Weddings',
+      'Pets',
+    ],
+    Entertainment: [
+      'Entertainment',
+      'Events',
+      'Film & Television',
+      'Humor',
+      'Music & Audio',
+      'Performing Arts',
+      'Visual Arts & Design',
+    ],
   };
   const handleItemSelected = (event, setSelectedFunction) => {
     setSelectedFunction(event.target.value);
@@ -195,10 +146,56 @@ const FrameOneTwoPage = () => {
     setDefisOption(event.target.value);
   };
 
+  const handleItemChange = (item) => (event) => {
+    if (event.target.checked) {
+      setSelectedItems((prevItems) => [...prevItems, item]);
+    } else {
+      setSelectedItems((prevItems) => prevItems.filter((prevItem) => prevItem !== item));
+      setAllSelectedTitles((prevItems) => prevItems.filter((prevItem) => prevItem !== item));
+    }
+
+    // add to allSelectedTitles
+    if (event.target.checked) {
+      setAllSelectedTitles((prevItems) => [...prevItems, item]);
+    }
+    console.log(allSelectedTitles);
+  };
+
+  useEffect(() => {
+    if (selectedItems.length > 0) {
+      localStorage.setItem("selectedItemsSpecific", JSON.stringify(allSelectedTitles));
+    }
+    }, [selectedItems]);
+
+
   useEffect(() => {
     const storedOption = localStorage.getItem("defisOption");
+    const storedResponsabilite = localStorage.getItem("responsabilite");
+    const storedDefis = localStorage.getItem("defis");
+    const storedObjectif = localStorage.getItem("objectifPersona");
+    const storedSelectedTitles = localStorage.getItem("selectedTitles");
+    const storedChallenges = localStorage.getItem("challenges");
+    const storedSelectedSpecific = localStorage.getItem("selectedItemsSpecific");
     if (storedOption) {
       setDefisOption(storedOption);
+    }
+    if (storedResponsabilite) {
+        setResponsabilite(storedResponsabilite);
+    }
+    if (storedDefis) {
+        setDefis(storedDefis);
+    }
+    if (storedObjectif) {
+        setObjectif(storedObjectif);
+    }
+    if (storedSelectedTitles) {
+        setSelectedTitles(storedSelectedTitles);
+    }
+    if (storedChallenges) {
+        setChallenges(storedChallenges);
+    }
+    if (storedSelectedSpecific) {
+        setSelectedItems(storedSelectedSpecific);
     }
   }, []);
 
@@ -224,19 +221,6 @@ const FrameOneTwoPage = () => {
       localStorage.setItem("responsabilite", responsabilite);
     }
   }, [responsabilite]);
-
-  const handleCheckboxChange = (event) => {
-    const checkboxValue = event.target.value;
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-      setDefis((prevDefis) => [...prevDefis, checkboxValue]);
-    } else {
-      setDefis((prevDefis) =>
-        prevDefis.filter((defi) => defi !== checkboxValue)
-      );
-    }
-  };
 
   useEffect(() => {
     const storedDefis = localStorage.getItem("defis");
@@ -264,6 +248,17 @@ const FrameOneTwoPage = () => {
       localStorage.setItem("objectifPersona", objectifPersona);
     }
   }, [objectifPersona]);
+
+
+  const handleCategoryClick = (category) => {
+    if (expandedCategory === category) {
+      setExpandedCategory('');
+    } else {
+      setExpandedCategory(category);
+    }
+    setSelectedItems([]);
+  };
+
 
   return (
     <>
@@ -372,29 +367,56 @@ const FrameOneTwoPage = () => {
                   Quels sont les centres d'interet de ce persona ?
                 </Text>
 
-                <FormControl fullWidth>
-                  <InputLabel>Select Categories</InputLabel>
-                  <Select
-                      multiple
-                      value={Object.values(selectedItems).flat()}
-                      onChange={(event) => setSelectedItems(event.target.value)}
-                      renderValue={(selected) =>
-                          selected.length > 0
-                              ? selected.join(', ')
-                              : 'Select Categories'
-                      }
-                  >
-                    {categoryData.map((category) => (
-                        <ExpandableCheckboxList
-                            key={category.title}
-                            title={category.title}
-                            items={category.items}
-                            selectedItems={selectedItems[category.title] || []}
-                            onChange={handleCategoryChange(category.title)}
-                        />
+                <div>
+                  <List>
+                    {Object.keys(categories).map((category) => (
+                        <div key={category}>
+                          <ListItem button onClick={() => handleCategoryClick(category)}>
+                            <ListItemText primary={category} />
+                            <IconButton>
+                              {expandedCategory === category ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                            </IconButton>
+                          </ListItem>
+                          <Collapse in={expandedCategory === category}>
+                            <List disablePadding>
+                              {categories[category].map((item) => (
+                                  <ListItem key={item} dense>
+                                    <Checkbox
+                                        checked={selectedItems.includes(item)}
+                                        onChange={handleItemChange(item)}
+                                    />
+                                    <ListItemText primary={item} />
+                                  </ListItem>
+                              ))}
+                            </List>
+                          </Collapse>
+                        </div>
                     ))}
-                  </Select>
-                </FormControl>
+                  </List>
+                </div>
+                <Text
+                    className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
+                    as="h5"
+                    variant="h5"
+                >
+                    Quels sont les centres d'interet de ce persona ?
+                </Text>
+                <div>
+                  <Typography variant="h5" className="font-normal mt-[85px] text-indigo-900">
+                    Selected Titles
+                  </Typography>
+                  <List>
+                    {titleItems.map((title) => (
+                        <ListItem key={title} dense>
+                          <ListItemText primary={title} />
+                          <Checkbox
+                              checked={selectedTitles.includes(title)}
+                              onChange={handleTitleChange(title)}
+                          />
+                        </ListItem>
+                    ))}
+                  </List>
+                </div>
               </div>
             </div>
             <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">

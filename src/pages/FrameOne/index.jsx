@@ -25,6 +25,14 @@ const FrameOnePage = () => {
   const [showChildrenForm2, setShowChildrenForm2] = React.useState(false);
   const [childrenNumber, setChildrenNumber] = React.useState(0);
   const [childrenAges,setChildrenAges] = useState('')
+  const [residence, setResidence] = useState("");
+  const [studyRange, setStudyRange] = useState("");
+
+  const handleResidenceChange = (event) => {
+    setResidence(event.target.value);
+    //put it in local storage
+    localStorage.setItem("residence", event.target.value);
+  }
 
 
   const arrayyy = [
@@ -108,18 +116,29 @@ const FrameOnePage = () => {
     setAgeRange(rangeValue);
   };
 
+  const handleStudyRangeChange = (event) => {
+    const rangeValue = parseInt(event.target.value);
+    setStudyRange(rangeValue);
+    localStorage.setItem("niveauEtude", niveauEtude[studyRange]);
+  }
+
   const handleEtudeRangeChange = (event) => {
     const rangeValue = parseInt(event.target.value);
     setEtudeRange(rangeValue)
   };
   useEffect(() => {
+    const storedResidence = localStorage.getItem("residence");
     const storedAgeRange = localStorage.getItem("ageRange");
     if (storedAgeRange) {
       setAgeRange(parseInt(storedAgeRange));
     }
+    if (storedResidence) {
+        setResidence(storedResidence);
+    }
   }, []);
 
   useEffect(() => {
+
     if (ageRange !== "") {
       localStorage.setItem("ageRange", ageRange);
     }
@@ -127,6 +146,7 @@ const FrameOnePage = () => {
     const storedChildrenNumber = localStorage.getItem("childrenNumber");
     const storedChildrenAges = localStorage.getItem("childrenAges");
     const storedHasChildren = localStorage.getItem("hasChildren");
+    const storedEtudeRange = localStorage.getItem("niveauEtude");
     if (storedSituation) {
         setSelectedOption(storedSituation);
         if (arrayyy.includes(storedSituation)) {
@@ -161,6 +181,12 @@ const FrameOnePage = () => {
     }
   }, [etudeRange]);
 
+  useEffect(() => {
+    if (etudeRange !== "") {
+      localStorage.setItem("niveauEtude", niveauEtude[studyRange]);
+    }
+  }, [studyRange]);
+
   const ageRangeLabels = [
     "moins 18 ans",
     "entre 18 et 24 ans",
@@ -188,7 +214,8 @@ const FrameOnePage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 flag={"Le fil arrivée est proche !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Hmm, une\n" +
+              "petite pause..."} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
@@ -225,6 +252,51 @@ const FrameOnePage = () => {
                     <div className="flex justify-between text-white_A700">
                       <Typography className="text-indigo_900">{ageRangeLabels[ageRange]}</Typography>
                     </div>
+                  </div>
+                </ThemeProvider>
+                <Text
+                    className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                    as="h5"
+                    variant="h5"
+                >
+                  Quels est le plus haut niveau d'étude que vous avez atteint ?
+                </Text>
+                <ThemeProvider theme={theme}>
+                  <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
+                    <div className="range-labels flex justify-between text-white_A700">
+                      <span className="text-indigo_900">{niveauEtude[0]}</span>
+                      <span className="text-indigo_900">{niveauEtude[5]}</span>
+                    </div>
+                    <Slider
+                        value={studyRange}
+                        onChange={handleStudyRangeChange}
+                        min={0}
+                        max={5}
+                        step={1}
+                        valueLabelDisplay="auto"
+                    />
+                    <div className="flex justify-between text-white_A700">
+                      <Typography className="text-indigo_900">{niveauEtude[studyRange]}</Typography>
+                    </div>
+                  </div>
+                </ThemeProvider>
+                <Text
+                    className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
+                    as="h5"
+                    variant="h5"
+                >
+                  Quel est le lieu de résidence de votre persona ?
+                </Text>
+                <ThemeProvider theme={theme}>
+                  <div className="h-[10px] md:h-[10px] mt-[4px] relative w-[85%] md:w-full">
+                    <FormControl className="w-full">
+                        <TextField
+                            id="residence"
+                            label="Saisis ton lieu de residence"
+                            value={residence}
+                            onChange={handleResidenceChange}
+                        />
+                    </FormControl>
                   </div>
                 </ThemeProvider>
                 <Text

@@ -73,7 +73,7 @@ const FrameOneFivePage = () => {
           <div className="absolute flex flex-col inset-x-[0] items-center justify-start mx-auto p-[9px] top-[0] w-full">
             <Img
               src="images/img_clippathgroup.png"
-              className="h-[148px] md:h-auto object-cover w-full"
+              className="h-[125px] md:h-auto object-cover w-full my-2"
               alt="clippathgroup"
             />
           </div>

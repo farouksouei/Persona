@@ -1,6 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Img, Line, Text } from "components";
 import Sidebar1 from "components/Sidebar1";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Checkbox from '@mui/material/Checkbox';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import {WhatsApp} from "@mui/icons-material";
+import {Telegram} from "@mui/icons-material";
+import {LinkedIn} from "@mui/icons-material";
+import {Pinterest} from "@mui/icons-material";
+import {Reddit} from "@mui/icons-material";
+import {Email} from "@mui/icons-material";
+import {Sms} from "@mui/icons-material";
+import {Link} from "@mui/icons-material";
+import {Phone} from "@mui/icons-material";
 
 const FrameOneOnePage = () => {
   const [informationsPersonnelles, setInformation] = useState("");
@@ -8,7 +28,32 @@ const FrameOneOnePage = () => {
   const [informationsPersonnelles3, setInformation3] = useState("");
   const [informationsPersonnelles4, setInformation4] = useState("");
   const [selectedIcons, setSelectedIcons] = useState([]);
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState([]);
 
+  const handleSocialMediaChange = (socialMediaId) => () => {
+    setSelectedSocialMedia((prevSelected) => {
+      if (prevSelected.includes(socialMediaId)) {
+        return prevSelected.filter((id) => id !== socialMediaId);
+      } else {
+        return [...prevSelected, socialMediaId];
+      }
+    });
+  };
+
+  const socialMediaIcons = [
+    { id: 'facebook', label: 'Facebook', icon: <FacebookIcon /> },
+    { id: 'twitter', label: 'Twitter', icon: <TwitterIcon /> },
+    { id: 'instagram', label: 'Instagram', icon: <InstagramIcon /> },
+    { id: 'whatapp', label: 'Whatapp', icon: <WhatsApp /> },
+    { id: 'telegram', label: 'Telegram', icon: <Telegram /> },
+    { id: 'linkedin', label: 'Linkedin', icon: <LinkedIn /> },
+    { id: 'pinterest', label: 'Pinterest', icon: <Pinterest /> },
+    { id: 'reddit', label: 'Reddit', icon: <Reddit /> },
+    { id: 'email', label: 'Email', icon: <Email /> },
+    { id: 'sms', label: 'Sms', icon: <Sms /> },
+    { id: 'link', label: 'Link', icon: <Link /> },
+    { id: 'phone', label: 'Phone', icon: <Phone /> },
+  ];
   const handleIconClick = (iconSrc, iconName) => {
     const isSelected = selectedIcons.some(
       (icon) => icon.src === iconSrc && icon.name === iconName
@@ -91,7 +136,8 @@ const FrameOneOnePage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 flag={"Le fil d'arrivée est proche !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Mission\n" +
+              "accomplie, bravo ! :)\n"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
               overflow: "hidden",
@@ -104,30 +150,6 @@ const FrameOneOnePage = () => {
                 </Text>
               </span>
               <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Ajouter des informations relatives aux
-                  sources d&#39;information utilisées
-                </Text>
-                <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
-                  <input
-                    type="text"
-                    className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
-                    placeholder="Ex : formations en ligne, conférences, etc."
-                    style={{ border: 'none' }}
-                    value={informationsPersonnelles}
-                    onChange={handleInformationChange}
-                  />
-                  <Img
-                    src="images/img_crayon1.png"
-                    className="h-5 md:h-auto mb-0.5 object-cover w-5 ml-2"
-                    alt="logo"
-                  />
-                </div>
-                <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-[99%]" />
 
                 <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                   <Text
@@ -136,7 +158,6 @@ const FrameOneOnePage = () => {
                     variant="h5"
                   >
                     Quelle est la station de radio que votre persona écoute ?
-
                   </Text>
                   <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
                     <input
@@ -202,131 +223,21 @@ const FrameOneOnePage = () => {
                         />
                       </div>
                       <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-[99%]" />
-
-                      <Text
-                        className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
-                        as="h5"
-                        variant="h5"
-                      >
+                      <Typography variant="h5" className="font-normal mt-[90px] text-indigo-900">
                         Sélectionnez les réseaux sociaux utilisés.
-                      </Text>
-                      <div className="gap-12 md:gap-6 grid sm:grid-cols-3 md:grid-cols-6 grid-cols-6 min-h-[auto] ml-1.5 md:ml-[0] mt-[23px] w-3/5">
-                        <Img
-                          src={selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-facebook.png' &&
-                              icon.name === 'Facebook'
-                          )
-                            ? 'images/icons8-facebook-active.png' // Replace 'new-image-source.png' with the new image source
-                            : 'images/icons8-facebook.png'
-                          }
-                          className={`h-[50px] md:ml-[0] ml-[7px] mt-[46px] w-[65px] ${selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-facebook.png' &&
-                              icon.name === 'Facebook'
-                          )
-                            ? ''
-                            : ''
-                            }`}
-                          alt="icons8facebook"
-                          onClick={() =>
-                            handleIconClick('images/icons8-facebook.png', 'Facebook')
-                          }
-                        />
-
-                        <Img
-                          src={selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-instagram.png' &&
-                              icon.name === 'Instagram'
-                          )
-                            ? 'images/icons8-instagram-active.png' // Replace 'new-image-source.png' with the new image source
-                            : 'images/icons8-instagram.png'
-                          }
-                          className={`h-[50px] md:ml-[0] ml-[7px] mt-[46px] w-[65px] ${selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-instagram.png' &&
-                              icon.name === 'Instagram'
-                          )
-                            ? ''
-                            : ''
-                            }`}
-                          alt="icons8instagram"
-                          onClick={() =>
-                            handleIconClick('images/icons8-instagram.png', 'Instagram')
-                          }
-                        />
-
-                        <Img
-                          src={selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-twitter.png' &&
-                              icon.name === 'Twitter'
-                          )
-                            ? 'images/icons8-twitter-active.png' // Replace 'new-image-source.png' with the new image source
-                            : 'images/icons8-twitter.png'
-                          }
-                          className={`h-[50px] md:ml-[0] ml-[7px] mt-[46px] w-[65px] ${selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-twitter.png' &&
-                              icon.name === 'Twitter'
-                          )
-                            ? ''
-                            : ''
-                            }`}
-                          alt="icons8twitter"
-                          onClick={() =>
-                            handleIconClick('images/icons8-twitter.png', 'Twitter')
-                          }
-                        />
-
-                        <Img
-                          src={selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-linkedin.png' &&
-                              icon.name === 'Linkedin'
-                          )
-                            ? 'images/icons8-linkedin-active.png' // Replace 'new-image-source.png' with the new image source
-                            : 'images/icons8-linkedin.png'
-                          }
-                          className={`h-[50px] md:ml-[0] ml-[7px] mt-[46px] w-[65px] ${selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-linkedin.png' &&
-                              icon.name === 'Linkedin'
-                          )
-                            ? ''
-                            : ''
-                            }`}
-                          alt="icons8linkedin"
-                          onClick={() =>
-                            handleIconClick('images/icons8-linkedin.png', 'Linkedin')
-                          }
-                        />
-
-                        <Img
-                          src={selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-pinterest.png' &&
-                              icon.name === 'Pinterest'
-                          )
-                            ? 'images/icons8-pinterest-active.png' // Replace 'new-image-source.png' with the new image source
-                            : 'images/icons8-pinterest.png'
-                          }
-                          className={`h-[50px] md:ml-[0] ml-[7px] mt-[46px] w-[65px] ${selectedIcons.some(
-                            (icon) =>
-                              icon.src === 'images/icons8-pinterest.png' &&
-                              icon.name === 'Pinterest'
-                          )
-                            ? ''
-                            : ''
-                            }`}
-                          alt="icons8pinterest"
-                          onClick={() =>
-                            handleIconClick('images/icons8-pinterest.png', 'Pinterest')
-                          }
-                        />
-
+                      </Typography>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        {socialMediaIcons.map((icon) => (
+                            <IconButton
+                                key={icon.id}
+                                onClick={handleSocialMediaChange(icon.id)}
+                                color={selectedSocialMedia.includes(icon.id) ? 'primary' : 'default'}
+                            >
+                              {icon.icon}
+                            </IconButton>
+                        ))}
                       </div>
+
                     </div>
                   </div>
                   <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">

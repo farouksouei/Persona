@@ -190,7 +190,7 @@ const FrameOneSixPage = () => {
       >
 
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 flag={"Hmm, une petite pause..."} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Dernier effort !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
 
             style={{
@@ -205,27 +205,7 @@ const FrameOneSixPage = () => {
               </span>
 
               <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Sélectionnez les outils nécessaires ou utilisés par le persona.
-                </Text>
-                <FormGroup>
-                  {options.map((option, index) => (
-                      <FormControlLabel
-                          key={index}
-                          control={
-                            <Checkbox
-                                checked={outilsNecessaires.includes(option)}
-                                onChange={() => handleCheckboxChange(option)}
-                            />
-                          }
-                          label={option}
-                      />
-                  ))}
-                </FormGroup>
+
 
 
                 <Text
@@ -294,7 +274,6 @@ const FrameOneSixPage = () => {
                     onChange={handleExpatrieChange}
                     fullWidth
                 />
-                <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-full" />
 
 
                 <Text
@@ -403,14 +382,13 @@ const FrameOneSixPage = () => {
                 <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
                   <TextField
                       type="text"
-                      className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
-                      placeholder=""
+                      className="font-normal w-[400px] bg-transparent outline-none text-left"
+                      placeholder="Orange, telecom , etc"
                       style={{ border: 'none' }}
                       value={optionDefis}
                       onChange={handleOptionChange}
                   />
                 </div>
-                <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-full" />
 
 
                 <Text

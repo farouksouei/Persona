@@ -377,7 +377,7 @@ const FrameTen = () => {
 
         const pageContents = [
           { image: imgData1, x: -20, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * scalingFactor },
-          { image: imgData2, x: 0, y: topMargin, width: imgWidth * 0.25, height: imgHeight * 0.9 },
+          { image: imgData2, x: 40, y: 20, width: imgWidth * 0.65, height: imgHeight * 1.4 },
         ];
 
         // Loop through each page content and add it to the PDF
@@ -781,10 +781,6 @@ const FrameTen = () => {
                             disabled={true}
                         />
                       </div>
-                      <div
-                          id="FrameTenTwo"
-                          className="sm:h-[1209px] h-[1375px] md:h-[2553px] md:px-5 relative w-full"
-                      >
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
@@ -849,7 +845,6 @@ const FrameTen = () => {
                       </div>
 
                     </div>
-                  </div>
                   <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
                     <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
                       placeholder="Saisir quelques choses"
@@ -873,8 +868,42 @@ const FrameTen = () => {
                   </div>
                   </div>
                 </div>
+                <div
+                    id="FrameTenTwo"
+                    className="sm:h-[1209px] h-[1375px] md:h-[2553px] md:px-5 relative w-full"
+                >
+                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      systeme Exploitation de telephone
+                    </Text>
+                    <Text
+                        className="text-base text-indigo-600_77 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {systemeExploitationMobile}
+                    </Text>
+                  </div>
 
+                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      utilization de telephone portable
+                    </Text>
+                    <Text
+                        className="text-base text-indigo-600_77 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {useMobile}
+                    </Text>
+                  </div>
+                </div>
               </div>
+
             </div>
 
           </div>

@@ -17,6 +17,7 @@ import {
 const theme = createTheme();
 const FrameOneOnePage = () => {
   const [intitulePoste, setIntitulePoste] = useState("");
+  const [lieuPoste, setLieuPoste] = useState("");
   const [indicateurPerformance, setPerformance] = useState("");
   const [superieurHierarchique, setHierarchique] = useState("");
   const [revenuAnnuel, setRevenuAnnuel] = useState("");
@@ -25,6 +26,12 @@ const FrameOneOnePage = () => {
     setHierarchique(event.target.value);
   };
 
+  const handleLieuPosteChange = (event) => {
+    setLieuPoste(event.target.value);
+
+    // set it in local storage
+    localStorage.setItem("lieuPoste", event.target.value);
+  }
   const handleIntitulePosteChange = (event) => {
     setIntitulePoste(event.target.value);
     // set it in local storage
@@ -40,6 +47,11 @@ const FrameOneOnePage = () => {
     const storedIntitulePoste = localStorage.getItem("intitulePoste");
     if (storedIntitulePoste) {
         setIntitulePoste(storedIntitulePoste);
+    }
+
+    const storedLieuPoste = localStorage.getItem("lieuPoste");
+    if (storedLieuPoste) {
+        setLieuPoste(storedLieuPoste);
     }
   }, [intitulePoste]);
 
@@ -99,7 +111,10 @@ const FrameOneOnePage = () => {
         }}
       >
         <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto md:px-5 w-full">
-          <Sidebar1 flag={"Dernier effort !"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
+          <Sidebar1 flag={"Le fil\n" +
+              "d'\n" +
+              "arrivée est\n" +
+              "proche !\n"} className="!sticky !w-[550px] flex h-screen md:hidden justify-start overflow-auto top-[0]" />
           <div
             className="container-div flex flex-1 flex-col gap-[15px]  justify-start md:mt-0 mt-[30px] w-full"
             style={{
@@ -140,12 +155,33 @@ const FrameOneOnePage = () => {
                         onChange={handleIntitulePosteChange}
                     />
                   </div>
-                  <Img
-                    src="images/img_crayon1.png"
-                    className="h-5 md:h-auto mb-[3px] object-cover w-5"
-                    alt="crayonOne"
-                  />
                 </div>
+
+                <Text
+                    className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                    as="h5"
+                    variant="h5"
+                >
+                  indiquez le lieu Du poste occupé:
+                </Text>
+                <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                  <div className="flex items-center">
+                    <TextField
+                        type="text"
+                        className="font-normal text-white_A700 w-[420px] bg-transparent outline-none text-left"
+                        placeholder="Par exemple, en termes de prospects, de revenus, etc."
+                        style={{ border: "none", fontSize: '32px' }}
+                        InputProps={{
+                          className: 'text-white_A700',
+                          placeholderTextColor: 'white',
+
+                        }}
+                        value={lieuPoste}
+                        onChange={handleLieuPosteChange}
+                    />
+                  </div>
+                </div>
+
                 <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                   <div
                     style={{
