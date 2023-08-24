@@ -16,25 +16,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
 
 const FrameOneTwoPage = () => {
-  const [objectifPersona, setObjectif] = useState("");
-  const [defis, setDefis] = useState([]);
-  const [responsabilite, setResponsabilite] = useState("");
-  const [defisOption, setDefisOption] = useState("");
-  const [secteurActivite, setSelectedOption] = useState("");
-  const [objectifPersonaOption, setObjectifPersonaOption] = useState("");
   const [selectedTitles, setSelectedTitles] = useState([]);
   const [allSelectedTitles, setAllSelectedTitles] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState({
-    technology: [],
-    sports: [],
-    hobby: [],
-    shoppingAndFashion: [],
-    fitnessAndWellness: [],
-    familyAndRelationship: [],
-    entertainment: [],
-  });
+
   const handleTitleChange = (title) => (event) => {
     if (event.target.checked) {
       setSelectedTitles((prevTitles) => [...prevTitles, title]);
@@ -50,28 +36,6 @@ const FrameOneTwoPage = () => {
     }
   }, [selectedTitles]);
 
-  const [challenges, setChallenges] = useState({
-    loseWeight: false,
-    improveFitness: false,
-    learnCooking: false,
-    reduceStress: false,
-  });
-
-  const handleChallengeChange = (challenge) => {
-    setChallenges((prevChallenges) => ({
-      ...prevChallenges,
-      [challenge]: !prevChallenges[challenge],
-    }));
-    console.log(challenges)
-    // set it in local storage
-    localStorage.setItem("challenges", challenges);
-  };
-
-    const handleObjectifPersonaChange = (event) => {
-      setObjectifPersonaOption(event.target.value);
-        // set it in local storage
-        localStorage.setItem("objectifPersona", event.target.value);
-    }
     const titleItems = [
         "Technology",
         "Sports",
@@ -133,19 +97,6 @@ const FrameOneTwoPage = () => {
       'Visual Arts & Design',
     ],
   };
-  const handleItemSelected = (event, setSelectedFunction) => {
-    setSelectedFunction(event.target.value);
-  };
-
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-
-  const handleDefisOptionChange = (event) => {
-    setDefisOption(event.target.value);
-  };
-
   const handleItemChange = (item) => (event) => {
     if (event.target.checked) {
       setSelectedItems((prevItems) => [...prevItems, item]);
@@ -154,7 +105,6 @@ const FrameOneTwoPage = () => {
       setAllSelectedTitles((prevItems) => prevItems.filter((prevItem) => prevItem !== item));
     }
 
-    // add to allSelectedTitles
     if (event.target.checked) {
       setAllSelectedTitles((prevItems) => [...prevItems, item]);
     }
@@ -166,89 +116,6 @@ const FrameOneTwoPage = () => {
       localStorage.setItem("selectedItemsSpecific", JSON.stringify(allSelectedTitles));
     }
     }, [selectedItems]);
-
-
-  useEffect(() => {
-    const storedOption = localStorage.getItem("defisOption");
-    const storedResponsabilite = localStorage.getItem("responsabilite");
-    const storedDefis = localStorage.getItem("defis");
-    const storedObjectif = localStorage.getItem("objectifPersona");
-    const storedSelectedTitles = localStorage.getItem("selectedTitles");
-    const storedChallenges = localStorage.getItem("challenges");
-    const storedSelectedSpecific = localStorage.getItem("selectedItemsSpecific");
-    if (storedOption) {
-      setDefisOption(storedOption);
-    }
-    if (storedResponsabilite) {
-        setResponsabilite(storedResponsabilite);
-    }
-    if (storedDefis) {
-        setDefis(storedDefis);
-    }
-    if (storedObjectif) {
-        setObjectif(storedObjectif);
-    }
-    if (storedSelectedTitles) {
-        setSelectedTitles(storedSelectedTitles);
-    }
-    if (storedChallenges) {
-        setChallenges(storedChallenges);
-    }
-    if (storedSelectedSpecific) {
-        setSelectedItems(storedSelectedSpecific);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (defisOption !== "") {
-      localStorage.setItem("defisOption", defisOption);
-    }
-  }, [defisOption]);
-
-  const handleResponsabiliteChange = (event) => {
-    setResponsabilite(event.target.value);
-  };
-
-  useEffect(() => {
-    const storedResponsabilite = localStorage.getItem("responsabilite");
-    if (storedResponsabilite) {
-      setResponsabilite(storedResponsabilite);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (responsabilite !== "") {
-      localStorage.setItem("responsabilite", responsabilite);
-    }
-  }, [responsabilite]);
-
-  useEffect(() => {
-    const storedDefis = localStorage.getItem("defis");
-    if (storedDefis) {
-      setDefis(JSON.parse(storedDefis));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (defis.length > 0) {
-      localStorage.setItem("defis", JSON.stringify(defis));
-    }
-  }, [defis]);
-
-
-  useEffect(() => {
-    const storedObjectif = localStorage.getItem("objectifPersona");
-    if (storedObjectif) {
-      setObjectif(storedObjectif);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (objectifPersona !== "") {
-      localStorage.setItem("objectifPersona", objectifPersona);
-    }
-  }, [objectifPersona]);
-
 
   const handleCategoryClick = (category) => {
     if (expandedCategory === category) {
@@ -290,74 +157,24 @@ const FrameOneTwoPage = () => {
               </span>
               <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                 <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
-                  Quels sont les objectifs du persona ?
-                </Text>
-
-                <FormControl fullWidth>
-                <TextField
-                    className=""
-                    id="outlined-multiline-static"
-                    label="Objectives"
-                    multiline
-                    rows={4}
-                    defaultValue="Default Value"
-                    variant="outlined"
-                    value={objectifPersonaOption}
-                    onChange={handleObjectifPersonaChange}
-                />
-                </FormControl>
-                <Text
                     className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
                     as="h5"
                     variant="h5"
                 >
-
-                  Quels sont les défis du persona ?
+                  Quels sont les centres d'interet de ce persona ?
                 </Text>
-                <FormControl>
-                  <FormGroup>
-                    <FormControlLabel
-                        control={
+                <div>
+                  <List>
+                    {titleItems.map((title) => (
+                        <ListItem key={title} dense>
+                          <ListItemText primary={title} />
                           <Checkbox
-                              checked={challenges.challenge1}
-                              onChange={() => handleChallengeChange('challenge1')}
+                              checked={selectedTitles.includes(title)}
+                              onChange={handleTitleChange(title)}
                           />
-                        }
-                        label="Challenge 1"
-                    />
-                    <FormControlLabel
-                        control={
-                          <Checkbox
-                              checked={challenges.challenge2}
-                              onChange={() => handleChallengeChange('challenge2')}
-                          />
-                        }
-                        label="Perdre du poids"
-                    />
-                    <FormControlLabel
-                        control={
-                          <Checkbox
-                              checked={challenges.challenge3}
-                              onChange={() => handleChallengeChange('challenge3')}
-                          />
-                        }
-                        label="Challenge 3"
-                    />
-                    <FormControlLabel
-                        control={
-                          <Checkbox
-                              checked={challenges.challenge4}
-                              onChange={() => handleChallengeChange('challenge4')}
-                          />
-                        }
-                        label="Améliorer sa forme physique"
-                    />
-                  </FormGroup>
-                </FormControl>
+                        </ListItem>
+                    ))}
+                  </List>
                 <Text
                   className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
                   as="h5"
@@ -366,7 +183,6 @@ const FrameOneTwoPage = () => {
 
                   Quels sont les centres d'interet de ce persona ?
                 </Text>
-
                 <div>
                   <List>
                     {Object.keys(categories).map((category) => (
@@ -394,28 +210,6 @@ const FrameOneTwoPage = () => {
                     ))}
                   </List>
                 </div>
-                <Text
-                    className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
-                    as="h5"
-                    variant="h5"
-                >
-                    Quels sont les centres d'interet de ce persona ?
-                </Text>
-                <div>
-                  <Typography variant="h5" className="font-normal mt-[85px] text-indigo-900">
-                    Selected Titles
-                  </Typography>
-                  <List>
-                    {titleItems.map((title) => (
-                        <ListItem key={title} dense>
-                          <ListItemText primary={title} />
-                          <Checkbox
-                              checked={selectedTitles.includes(title)}
-                              onChange={handleTitleChange(title)}
-                          />
-                        </ListItem>
-                    ))}
-                  </List>
                 </div>
               </div>
             </div>
