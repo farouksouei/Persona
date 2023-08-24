@@ -37,57 +37,59 @@ const FrameOneTwoPage = () => {
   }, [selectedTitles]);
 
     const titleItems = [
-        "Technology",
-        "Sports",
-        "Hobby",
+        "Technology (Computer and electronics)",
+        "Sports and outdoors",
+        "Hobbies and activities",
         "Shopping & Fashion",
-        "Fitness & Wellness",
+        "Fitness & Wellness (fitness)",
         "Family & Relationship",
-        "Entertainment",
+        "Entertainment (Leisure)",
+        "Business & industry",
+        "Food and drink (consumables)"
         ];
 
   const categories = {
-    Technology: [
+    "Technology (Computer and electronics)": [
       'Computer Hardware',
       'Computer Software',
       'Consumer Electronics',
       'Internet',
       'Telecommunications',
     ],
-    Sports: [
+    "Sports and outdoors": [
       'Sports',
       'Sports Apparel',
       'Sports Equipment & Accessories',
       'Sports Teams & Leagues',
       'Sports Venues',
     ],
-    Hobby: [
+    "Hobbies and activities": [
       'Arts & Crafts',
       'Beauty & Personal Care',
       'Books & Literature',
       'Celebrity Fan/Gossip',
       'Fine Art',
     ],
-    ShoppingAndFashion: [
+    "Shopping & Fashion": [
       'Apparel',
       'Beauty',
       'Fashion',
       'Jewelry & Watches',
       'Shopping',
     ],
-    FitnessAndWellness: [
+    "Fitness & Wellness (fitness)": [
       'Fitness',
       'Health',
       'Nutrition',
       'Wellness',
     ],
-    FamilyAndRelationship: [
+    "Family & Relationship": [
       'Family & Parenting',
       'Relationships',
       'Weddings',
       'Pets',
     ],
-    Entertainment: [
+    "Entertainment (Leisure)": [
       'Entertainment',
       'Events',
       'Film & Television',
@@ -96,6 +98,15 @@ const FrameOneTwoPage = () => {
       'Performing Arts',
       'Visual Arts & Design',
     ],
+    "Business & industry" : [
+        'ehyoo',
+        'haya'
+    ],
+    "Food and drink (consumables)" : [
+        'yo',
+        'bitch',
+        'what up'
+    ]
   };
   const handleItemChange = (item) => (event) => {
     if (event.target.checked) {
