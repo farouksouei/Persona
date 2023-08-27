@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Img, Line, Text } from "components";
 import Sidebar1 from "components/Sidebar1";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -16,12 +10,7 @@ import {WhatsApp} from "@mui/icons-material";
 import {Telegram} from "@mui/icons-material";
 import {LinkedIn} from "@mui/icons-material";
 import {Pinterest} from "@mui/icons-material";
-import {Reddit} from "@mui/icons-material";
-import {Email} from "@mui/icons-material";
-import {Sms} from "@mui/icons-material";
-import {Link} from "@mui/icons-material";
-import {Phone} from "@mui/icons-material";
-
+import TextField from '@mui/material/TextField';
 const FrameOneOnePage = () => {
   const [informationsPersonnelles, setInformation] = useState("");
   const [informationsPersonnelles2, setInformation2] = useState("");
@@ -38,7 +27,14 @@ const FrameOneOnePage = () => {
         return [...prevSelected, socialMediaId];
       }
     });
+    console.log(selectedSocialMedia)
   };
+
+  useEffect(() => {
+    if (selectedSocialMedia.length >= 0) {
+      localStorage.setItem("selectedIcons", selectedSocialMedia);
+    }
+  }, [selectedIcons]);
 
   const socialMediaIcons = [
     { id: 'facebook', label: 'Facebook', icon: <FacebookIcon /> },
@@ -48,11 +44,6 @@ const FrameOneOnePage = () => {
     { id: 'telegram', label: 'Telegram', icon: <Telegram /> },
     { id: 'linkedin', label: 'Linkedin', icon: <LinkedIn /> },
     { id: 'pinterest', label: 'Pinterest', icon: <Pinterest /> },
-    { id: 'reddit', label: 'Reddit', icon: <Reddit /> },
-    { id: 'email', label: 'Email', icon: <Email /> },
-    { id: 'sms', label: 'Sms', icon: <Sms /> },
-    { id: 'link', label: 'Link', icon: <Link /> },
-    { id: 'phone', label: 'Phone', icon: <Phone /> },
   ];
   const handleIconClick = (iconSrc, iconName) => {
     const isSelected = selectedIcons.some(
@@ -100,6 +91,10 @@ const FrameOneOnePage = () => {
     const storedInformation2 = localStorage.getItem("informationsPersonnelles2");
     const storedInformation3 = localStorage.getItem("informationsPersonnelles3");
     const storedInformation4 = localStorage.getItem("informationsPersonnelles4");
+    const storedIcons = localStorage.getItem("selectedIcons");
+    if (storedIcons) {
+      setSelectedSocialMedia(storedIcons)
+    }
     if (storedInformation) {
       setInformation(storedInformation);
     }
@@ -160,21 +155,21 @@ const FrameOneOnePage = () => {
                     Quelle est la station de radio que votre persona écoute ?
                   </Text>
                   <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
-                    <input
-                      type="text"
-                      className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
-                      placeholder=""
-                      style={{ border: 'none' }}
-                      value={informationsPersonnelles2}
-                      onChange={handleInformationChange2}
-                    />
-                    <Img
-                      src="images/img_crayon1.png"
-                      className="h-5 md:h-auto mb-0.5 object-cover w-5 ml-2"
-                      alt="logo"
+                    <TextField
+                        type="text"
+                        variant="outlined"
+                        fullWidth
+                        sx={{
+                          '& .MuiInputBase-root': {
+                            backgroundColor: 'transparent', // Transparent background
+                            border: 'none', // No border
+                          },
+                        }}
+                        placeholder=""
+                        value={informationsPersonnelles2}
+                        onChange={handleInformationChange2}
                     />
                   </div>
-                  <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-[99%]" />
 
                   <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                     <Text
@@ -184,21 +179,21 @@ const FrameOneOnePage = () => {
                     >
                       Quelle est la chaîne de télévision que votre persona regarde ?                    </Text>
                     <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
-                      <input
-                        type="text"
-                        className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
-                        placeholder=""
-                        style={{ border: 'none' }}
-                        value={informationsPersonnelles3}
-                        onChange={handleInformationChange3}
-                      />
-                      <Img
-                        src="images/img_crayon1.png"
-                        className="h-5 md:h-auto mb-0.5 object-cover w-5 ml-2"
-                        alt="logo"
+                      <TextField
+                          type="text"
+                          variant="outlined"
+                          fullWidth
+                          sx={{
+                            '& .MuiInputBase-root': {
+                              backgroundColor: 'transparent', // Transparent background
+                              border: 'none', // No border
+                            },
+                          }}
+                          placeholder=""
+                          value={informationsPersonnelles3}
+                          onChange={handleInformationChange3}
                       />
                     </div>
-                    <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-[99%]" />
 
                     <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                       <Text
@@ -208,22 +203,23 @@ const FrameOneOnePage = () => {
                       >
                         Quels sont les médias digitaux que votre persona suit ?                   </Text>
                       <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
-                        <input
-                          type="text"
-                          className="font-normal text-white_A700 w-[400px] bg-transparent outline-none text-left"
-                          placeholder=""
-                          style={{ border: 'none' }}
-                          value={informationsPersonnelles4}
-                          onChange={handleInformationChange4}
-                        />
-                        <Img
-                          src="images/img_crayon1.png"
-                          className="h-5 md:h-auto mb-0.5 object-cover w-5 ml-2"
-                          alt="logo"
+                        <TextField
+                            type="text"
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                              '& .MuiInputBase-root': {
+                                backgroundColor: 'transparent', // Transparent background
+                                border: 'none', // No border
+                              },
+                            }}
+                            placeholder=""
+                            value={informationsPersonnelles4}
+                            onChange={handleInformationChange4}
                         />
                       </div>
-                      <Line className="bg-white_A700 h-px ml-0.5 md:ml-[0] w-[99%]" />
-                      <Typography variant="h5" className="font-normal mt-[90px] text-indigo-900">
+                      <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                      <Typography variant="h5" className="font-normal mt-[90px] text-indigo-900 m-4">
                         Sélectionnez les réseaux sociaux utilisés.
                       </Typography>
                       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -232,10 +228,12 @@ const FrameOneOnePage = () => {
                                 key={icon.id}
                                 onClick={handleSocialMediaChange(icon.id)}
                                 color={selectedSocialMedia.includes(icon.id) ? 'primary' : 'default'}
+                                sx={{ m: 1 ,width:'100px',height:'100px'}}
                             >
                               {icon.icon}
                             </IconButton>
                         ))}
+                      </div>
                       </div>
 
                     </div>

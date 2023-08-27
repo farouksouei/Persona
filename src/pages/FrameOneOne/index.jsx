@@ -138,7 +138,7 @@ const FrameOneOnePage = () => {
                   as="h5"
                   variant="h5"
                 >
-                  indiquez l'intitulé de post.
+                  indiquez l'intitulé du post.
                 </Text>
                 <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
                   <div className="flex items-center">
@@ -162,7 +162,7 @@ const FrameOneOnePage = () => {
                     as="h5"
                     variant="h5"
                 >
-                  indiquez le lieu Du poste occupé:
+                  indiquez le lieu du poste occupé:
                 </Text>
                 <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
                   <div className="flex items-center">

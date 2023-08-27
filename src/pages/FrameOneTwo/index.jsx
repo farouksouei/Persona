@@ -5,37 +5,44 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import {TextField} from "@mui/material";
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import IconButton from '@mui/material/IconButton';
-
+import FormLabel from '@mui/material/FormLabel';
 const FrameOneTwoPage = () => {
   const [selectedTitles, setSelectedTitles] = useState([]);
-  const [allSelectedTitles, setAllSelectedTitles] = useState([]);
-  const [expandedCategory, setExpandedCategory] = useState('');
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState({});
 
-  const handleTitleChange = (title) => (event) => {
-    if (event.target.checked) {
-      setSelectedTitles((prevTitles) => [...prevTitles, title]);
-    } else {
-      setSelectedTitles((prevTitles) => prevTitles.filter((prevTitle) => prevTitle !== title));
-    }
+  const handleTitleChange = (event) => {
+    const title = event.target.value;
+    setSelectedTitles((prevSelectedTitles) =>
+        prevSelectedTitles.includes(title)
+            ? prevSelectedTitles.filter((item) => item !== title)
+            : [...prevSelectedTitles, title]
+    );
   };
 
   useEffect(() => {
-    console.log(selectedTitles);
-    if (selectedTitles.length > 0) {
-      localStorage.setItem("selectedTitles", JSON.stringify(selectedTitles));
-    }
-  }, [selectedTitles]);
+    const fullSelectedItems = selectedTitles.reduce((accumulator, title) => {
+      return [
+        ...accumulator,
+        ...(selectedItems[title] || []).map((item) => ({ title, item })),
+      ];
+    }, []);
 
+    localStorage.setItem('fullSelectedItems', JSON.stringify(fullSelectedItems));
+  }, [selectedTitles, selectedItems]);
+
+  const handleItemChange = (event, title) => {
+    const item = event.target.value;
+    setSelectedItems((prevSelectedItems) => ({
+      ...prevSelectedItems,
+      [title]: prevSelectedItems[title]
+          ? prevSelectedItems[title].includes(item)
+              ? prevSelectedItems[title].filter((i) => i !== item)
+              : [...prevSelectedItems[title], item]
+          : [item],
+    }));
+
+    console.log(selectedItems)
+  };
     const titleItems = [
         "Technology (Computer and electronics)",
         "Sports and outdoors",
@@ -48,7 +55,7 @@ const FrameOneTwoPage = () => {
         "Food and drink (consumables)"
         ];
 
-  const categories = {
+  const SpecificTitleItems = {
     "Technology (Computer and electronics)": [
       'Computer Hardware',
       'Computer Software',
@@ -99,42 +106,20 @@ const FrameOneTwoPage = () => {
       'Visual Arts & Design',
     ],
     "Business & industry" : [
-        'ehyoo',
-        'haya'
+        'Advertising & Marketing',
+        'Aerospace & Defense',
+        'Agriculture',
+        'Automotive Industry',
+        'Aviation',
     ],
     "Food and drink (consumables)" : [
-        'yo',
-        'bitch',
-        'what up'
+        'Alcoholic Beverages',
+        'Beverages',
+        'Cooking & Recipes',
+        'Cuisine',
+        'Food',
+        'Restaurants',
     ]
-  };
-  const handleItemChange = (item) => (event) => {
-    if (event.target.checked) {
-      setSelectedItems((prevItems) => [...prevItems, item]);
-    } else {
-      setSelectedItems((prevItems) => prevItems.filter((prevItem) => prevItem !== item));
-      setAllSelectedTitles((prevItems) => prevItems.filter((prevItem) => prevItem !== item));
-    }
-
-    if (event.target.checked) {
-      setAllSelectedTitles((prevItems) => [...prevItems, item]);
-    }
-    console.log(allSelectedTitles);
-  };
-
-  useEffect(() => {
-    if (selectedItems.length > 0) {
-      localStorage.setItem("selectedItemsSpecific", JSON.stringify(allSelectedTitles));
-    }
-    }, [selectedItems]);
-
-  const handleCategoryClick = (category) => {
-    if (expandedCategory === category) {
-      setExpandedCategory('');
-    } else {
-      setExpandedCategory(category);
-    }
-    setSelectedItems([]);
   };
 
 
@@ -174,54 +159,52 @@ const FrameOneTwoPage = () => {
                 >
                   Quels sont les centres d'interet de ce persona ?
                 </Text>
-                <div>
-                  <List>
+              </div>
+              <div>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Select Titles</FormLabel>
+                  <FormGroup>
                     {titleItems.map((title) => (
-                        <ListItem key={title} dense>
-                          <ListItemText primary={title} />
-                          <Checkbox
-                              checked={selectedTitles.includes(title)}
-                              onChange={handleTitleChange(title)}
-                          />
-                        </ListItem>
+                        <FormControlLabel
+                            key={title}
+                            control={
+                              <Checkbox
+                                  checked={selectedTitles.includes(title)}
+                                  onChange={handleTitleChange}
+                                  value={title}
+                              />
+                            }
+                            label={title}
+                        />
                     ))}
-                  </List>
-                <Text
-                  className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
-                  as="h5"
-                  variant="h5"
-                >
+                  </FormGroup>
+                </FormControl>
 
-                  Quels sont les centres d'interet de ce persona ?
-                </Text>
-                <div>
-                  <List>
-                    {Object.keys(categories).map((category) => (
-                        <div key={category}>
-                          <ListItem button onClick={() => handleCategoryClick(category)}>
-                            <ListItemText primary={category} />
-                            <IconButton>
-                              {expandedCategory === category ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                            </IconButton>
-                          </ListItem>
-                          <Collapse in={expandedCategory === category}>
-                            <List disablePadding>
-                              {categories[category].map((item) => (
-                                  <ListItem key={item} dense>
-                                    <Checkbox
-                                        checked={selectedItems.includes(item)}
-                                        onChange={handleItemChange(item)}
-                                    />
-                                    <ListItemText primary={item} />
-                                  </ListItem>
-                              ))}
-                            </List>
-                          </Collapse>
-                        </div>
+                {selectedTitles.length > 0 &&
+                    selectedTitles.map((title) => (
+                        <FormControl key={title} component="fieldset">
+                          <FormLabel component="legend">Select Items for {title}</FormLabel>
+                          <FormGroup>
+                            {SpecificTitleItems[title].map((item) => (
+                                <FormControlLabel
+                                    key={item}
+                                    control={
+                                      <Checkbox
+                                          checked={
+                                            selectedItems[title]
+                                                ? selectedItems[title].includes(item)
+                                                : false
+                                          }
+                                          onChange={(event) => handleItemChange(event, title)}
+                                          value={item}
+                                      />
+                                    }
+                                    label={item}
+                                />
+                            ))}
+                          </FormGroup>
+                        </FormControl>
                     ))}
-                  </List>
-                </div>
-                </div>
               </div>
             </div>
             <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">
