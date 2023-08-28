@@ -6,10 +6,19 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormLabel from '@mui/material/FormLabel';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 const FrameOneTwoPage = () => {
   const [selectedTitles, setSelectedTitles] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
+  const [expanded, setExpanded] = useState('');
 
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const handleTitleChange = (event) => {
     const title = event.target.value;
     setSelectedTitles((prevSelectedTitles) =>
@@ -179,31 +188,55 @@ const FrameOneTwoPage = () => {
                     ))}
                   </FormGroup>
                 </FormControl>
-
+                <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                  <Text
+                      className="font-normal md:ml-[0] ml-[3px] mt-[30px] text-indigo_900"
+                      as="h5"
+                      variant="h5"
+                  >
+                    Quels sont les centres d'interet de ce persona (Specifique)?
+                  </Text>
+                </div>
                 {selectedTitles.length > 0 &&
                     selectedTitles.map((title) => (
-                        <FormControl key={title} component="fieldset">
-                          <FormLabel component="legend">Select Items for {title}</FormLabel>
-                          <FormGroup>
-                            {SpecificTitleItems[title].map((item) => (
-                                <FormControlLabel
-                                    key={item}
-                                    control={
-                                      <Checkbox
-                                          checked={
-                                            selectedItems[title]
-                                                ? selectedItems[title].includes(item)
-                                                : false
-                                          }
-                                          onChange={(event) => handleItemChange(event, title)}
-                                          value={item}
-                                      />
-                                    }
-                                    label={item}
-                                />
-                            ))}
-                          </FormGroup>
-                        </FormControl>
+                        <Accordion
+                            key={title}
+                            expanded={expanded === title}
+                            onChange={handleAccordionChange(title)}
+                            style={{ background: 'transparent' }}
+                        >
+                          <AccordionSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls={`${title}-content`}
+                              id={`${title}-header`}
+                              style={{ background: 'transparent' }}
+                          >
+                            <FormLabel component="legend">Select Items for {title}</FormLabel>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <FormControl component="fieldset">
+                              <FormGroup>
+                                {SpecificTitleItems[title].map((item) => (
+                                    <FormControlLabel
+                                        key={item}
+                                        control={
+                                          <Checkbox
+                                              checked={
+                                                selectedItems[title]
+                                                    ? selectedItems[title].includes(item)
+                                                    : false
+                                              }
+                                              onChange={(event) => handleItemChange(event, title)}
+                                              value={item}
+                                          />
+                                        }
+                                        label={item}
+                                    />
+                                ))}
+                              </FormGroup>
+                            </FormControl>
+                          </AccordionDetails>
+                        </Accordion>
                     ))}
               </div>
             </div>

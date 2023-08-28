@@ -4,6 +4,7 @@ import { Img, Line, Text } from "components";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import PDFContent from "./PDFContent";
+import {TextField} from "@mui/material";
 
 const FrameTen = () => {
   const [name, setName] = useState("");
@@ -40,6 +41,28 @@ const FrameTen = () => {
   const [niveauEtudee, setNiveauEtudee] = React.useState('');
   const [operateurUtilise, setOperateurUtilise] = React.useState('');
   const [revenuAnnuel, setRevenuAnnuel] = React.useState('');
+  const [residence, setResidence] = React.useState('');
+  const [groupedData, setGroupedData] = useState({});
+
+  useEffect(() => {
+    // Fetch data from local storage
+    const storedData = JSON.parse(localStorage.getItem('fullSelectedItems'));
+    if (storedData) {
+      const grouped = groupDataByTitle(storedData);
+      setGroupedData(grouped);
+    }
+  }, []);
+
+  const groupDataByTitle = (data) => {
+    const grouped = {};
+    data.forEach(item => {
+      if (!grouped[item.title]) {
+        grouped[item.title] = [];
+      }
+      grouped[item.title].push(item.item);
+    });
+    return grouped;
+  };
 
 
   useEffect(() => {
@@ -48,6 +71,7 @@ const FrameTen = () => {
     const storedLieuposte = localStorage.getItem("lieuPoste");
     const storedoperateurUtilise = localStorage.getItem("optionDefis");
     const storedRevenuAnnuel = localStorage.getItem("revenuAnnuel");
+    const storedResidence = localStorage.getItem("residence");
     if (storedDefisOption) {
       setDefisOption(storedDefisOption);
     }
@@ -62,6 +86,9 @@ const FrameTen = () => {
     }
     if (storedRevenuAnnuel) {
       setRevenuAnnuel(storedRevenuAnnuel);
+    }
+    if (storedResidence) {
+      setResidence(storedResidence);
     }
   }, []);
 
@@ -372,7 +399,24 @@ const FrameTen = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("optionDefis");
     localStorage.removeItem("reseauxsociaux");
-
+    localStorage.removeItem("moyencommunicationprefere");
+    localStorage.removeItem("defisOption");
+    localStorage.removeItem("informationsPersonnelles2");
+    localStorage.removeItem("informationsPersonnelles3");
+    localStorage.removeItem("informationsPersonnelles4");
+    localStorage.removeItem("comportement");
+    localStorage.removeItem("anniversaire");
+    localStorage.removeItem("expatrie");
+    localStorage.removeItem("football");
+    localStorage.removeItem("useMobile");
+    localStorage.removeItem("systemeExploitationMobile");
+    localStorage.removeItem("childrenAges");
+    localStorage.removeItem("hasChildren");
+    localStorage.removeItem("situation");
+    localStorage.removeItem("niveauEtude");
+    localStorage.removeItem("operateurUtilise");
+    localStorage.removeItem("revenuAnnuel");
+    localStorage.removeItem("residence");
   };
 
   // Call deleteLocalStorageItems() to delete all the items
@@ -402,8 +446,8 @@ const FrameTen = () => {
 
           const pageContents = [
             { image: imgData1, x: -10, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * scalingFactor },
-            { image: imgData2, x: 40, y: 20, width: imgWidth * 0.65, height: imgHeight * 0.9 },
-            { image: imgData3, x: 40, y: 20, width: imgWidth * 0.65, height: imgHeight * 0.9 },
+            { image: imgData2, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.9 },
+            { image: imgData3, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.55 },
           ];
 
           // Loop through each page content and add it to the PDF
@@ -420,6 +464,7 @@ const FrameTen = () => {
         });
       });
     });
+    deleteLocalStorageItems()
   };
 
 
@@ -672,7 +717,7 @@ const FrameTen = () => {
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                           size="txtLibreBaskervilleRegular16"
                         >
-                          Objectifs
+                          Residence
                         </Text>
                         <input
                           type="text"
@@ -680,9 +725,7 @@ const FrameTen = () => {
                           size="txtLibreBaskervilleRegular16Indigo60077"
                           placeholder="Saisir un objectif"
                           style={{ border: 'none' }}
-                          value={objectifPersona}
-                          onChange={handleObjectifChange}
-
+                          value={residence}
                         />
                       </div>
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
@@ -690,7 +733,7 @@ const FrameTen = () => {
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                           size="txtLibreBaskervilleRegular16"
                         >
-                          Supérieur hiérarchique
+                          Est-ce que le produit/service concerne un persona dont l'anniversaire se situe dans 61 à 90 jours ?
                         </Text>
                         <input
                           type="text"
@@ -698,8 +741,7 @@ const FrameTen = () => {
                           size="txtLibreBaskervilleRegular16Indigo60077"
                           placeholder="Saisir un hiérarchique"
                           style={{ border: 'none' }}
-                          value={superieurHierarchique}
-                          onChange={handleHierarchiqueChange}
+                          value={anniversaire}
                         />
                       </div>
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
@@ -816,59 +858,9 @@ const FrameTen = () => {
                           {defisOption}
                         </Text>
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full ">
-                        <Text
-                            className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                            size="txtLibreBaskervilleRegular16"
-                        >
-                          systeme Exploitation de telephone
-                        </Text>
-                        <Text
-                            className="text-base text-indigo-600_77 w-[200px]"
-                            size="txtLibreBaskervilleRegular16Indigo60077"
-                        >
-                          {systemeExploitationMobile}
-                        </Text>
-                      </div>
-
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                        <Text
-                            className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                            size="txtLibreBaskervilleRegular16"
-                        >
-                          utilization de telephone portable
-                        </Text>
-                        <Text
-                            className="text-base text-indigo-600_77 w-[200px]"
-                            size="txtLibreBaskervilleRegular16Indigo60077"
-                        >
-                          {useMobile}
-                        </Text>
-                      </div>
 
                     </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
-                    <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
-                      placeholder="Saisir quelques choses"
-                    />
-                    <input
-                      type="text"
-                      className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
-                      placeholder="Saisir une source"
-                      size="txtLibreBaskervilleRegular16Indigo60077"
-                      style={{ border: 'none' }}
-
-                    />
-                  </div>
                     <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
-                  <div className="flex flex-col font-bebasneue items-center justify-start outline-[5px] outline-dashed outline-white-A700 p-[43px] md:px-10 sm:px-5 rounded-[10px] w-full" onClick={handleClick}>
-                    <Text
-                      className="mb-[11px] text-center text-white-A700 text-xl"
-                      size="txtBebasNeueRegular20"
-                    >
-                      Ajouter Une Section +
-                    </Text>
-                  </div>
                   </div>
                 </div>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
@@ -925,13 +917,13 @@ const FrameTen = () => {
                         className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
                     >
-                      L'operateur telephonique de votre persona est :
+                      Le Compotement de votre persona est :
                     </Text>
                     <Text
                         className="text-base text-indigo-600_77 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                     >
-                      {football}
+                      {comportement}
                     </Text>
                   </div>
                   <div className=" relative w-full bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
@@ -951,7 +943,6 @@ const FrameTen = () => {
                 </div>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
-
                 <div
                     id="FrameTenThree"
                     className=" bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full sm:h-[1209px] h-[1375px] md:h-[2553px] md:px-5 relative w-full rounded-[10px]"
@@ -961,72 +952,44 @@ const FrameTen = () => {
                         className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
                     >
-                      systeme Exploitation de telephone
+                      Les centres d'interet de ce persona :
                     </Text>
-                    <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
-                        size="txtLibreBaskervilleRegular16Indigo60077"
-                    >
-                      {systemeExploitationMobile}
+                    <Text size="txtLibreBaskervilleRegular16Indigo60077" className="text-base text-indigo-600_77 w-[200px] bg-transparent border-none text-blue-gray-600 font-serif w-full min-h-[100px] whitespace-pre-wrap p-4">
+                      {Object.keys(groupedData).map(title => (
+                          <React.Fragment key={title}>
+                            {`${title}:\n${groupedData[title].join('\n')}`}
+                            <br /><br />
+                          </React.Fragment>
+                      ))}
                     </Text>
+
                   </div>
 
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                    <Text
-                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                        size="txtLibreBaskervilleRegular16"
-                    >
-                      utilization de telephone portable
-                    </Text>
-                    <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
-                        size="txtLibreBaskervilleRegular16Indigo60077"
-                    >
-                      {useMobile}
-                    </Text>
-                  </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                    <Text
-                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                        size="txtLibreBaskervilleRegular16"
-                    >
-                      Est-ce que votre persona est un fan de football ?
-                    </Text>
-                    <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
-                        size="txtLibreBaskervilleRegular16Indigo60077"
-                    >
-                      {football}
-                    </Text>
-                  </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                    <Text
-                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                        size="txtLibreBaskervilleRegular16"
-                    >
-                      L'operateur telephonique de votre persona est :
-                    </Text>
-                    <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
-                        size="txtLibreBaskervilleRegular16Indigo60077"
-                    >
-                      {football}
-                    </Text>
-                  </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                    <Text
-                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                        size="txtLibreBaskervilleRegular16"
-                    >
-                      Le niveau d'etude de votre persona est :
-                    </Text>
-                    <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
-                        size="txtLibreBaskervilleRegular16Indigo60077"
-                    >
-                      {niveauEtudee}
-                    </Text>
-                  </div>
+                </div>
+                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
+                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
+                <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
+                  <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
+                         placeholder="Saisir quelques choses"
+                  />
+                  <input
+                      type="text"
+                      className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                      placeholder="Saisir une source"
+                      size="txtLibreBaskervilleRegular16Indigo60077"
+                      style={{ border: 'none' }}
+
+                  />
+                </div>
+                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
+                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
+                <div className="flex flex-col font-bebasneue items-center justify-start outline-[5px] outline-dashed outline-white-A700 p-[43px] md:px-10 sm:px-5 rounded-[10px] w-full" onClick={handleClick}>
+                  <Text
+                      className="mb-[11px] text-center text-white-A700 text-xl"
+                      size="txtBebasNeueRegular20"
+                  >
+                    Ajouter Une Section +
+                  </Text>
                 </div>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>

@@ -144,13 +144,9 @@ const FrameOneOnePage = () => {
                   <div className="flex items-center">
                     <TextField
                         type="text"
-                        className="font-normal text-white_A700 w-[420px] bg-transparent outline-none text-left"
+                        className="font-normal w-[420px] bg-transparent outline-none text-left"
                         placeholder="Par exemple, en termes de prospects, de revenus, etc."
                         style={{ border: "none" }}
-                        InputProps={{
-                          className: 'text-white_A700',
-                          placeholderTextColor: 'white',
-                        }}
                         value={intitulePoste}
                         onChange={handleIntitulePosteChange}
                     />
@@ -168,14 +164,9 @@ const FrameOneOnePage = () => {
                   <div className="flex items-center">
                     <TextField
                         type="text"
-                        className="font-normal text-white_A700 w-[420px] bg-transparent outline-none text-left"
+                        className="font-normal w-[420px] bg-transparent outline-none text-left"
                         placeholder="Par exemple, en termes de prospects, de revenus, etc."
                         style={{ border: "none", fontSize: '32px' }}
-                        InputProps={{
-                          className: 'text-white_A700',
-                          placeholderTextColor: 'white',
-
-                        }}
                         value={lieuPoste}
                         onChange={handleLieuPosteChange}
                     />
