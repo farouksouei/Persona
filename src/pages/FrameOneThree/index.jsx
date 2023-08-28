@@ -21,20 +21,25 @@ const FrameOneOnePage = () => {
 
   const handleSocialMediaChange = (socialMediaId) => () => {
     setSelectedSocialMedia((prevSelected) => {
-      if (prevSelected.includes(socialMediaId)) {
-        return prevSelected.filter((id) => id !== socialMediaId);
-      } else {
-        return [...prevSelected, socialMediaId];
-      }
+      const updatedSelected = prevSelected.includes(socialMediaId)
+          ? prevSelected.filter((id) => id !== socialMediaId)
+          : [...prevSelected, socialMediaId];
+
+      // Store the updated selection in local storage
+      localStorage.setItem('selectedSocialMedia', JSON.stringify(updatedSelected));
+
+      return updatedSelected;
     });
-    console.log(selectedSocialMedia)
   };
 
+// When your component initializes, retrieve the data from local storage
+// and set it as the initial selected social media
   useEffect(() => {
-    if (selectedSocialMedia.length >= 0) {
-      localStorage.setItem("selectedIcons", selectedSocialMedia);
+    const storedSelectedSocialMedia = localStorage.getItem('selectedSocialMedia');
+    if (storedSelectedSocialMedia) {
+      setSelectedSocialMedia(JSON.parse(storedSelectedSocialMedia));
     }
-  }, [selectedIcons]);
+  }, []);
 
   const socialMediaIcons = [
     { id: 'facebook', label: 'Facebook', icon: <FacebookIcon /> },
@@ -45,21 +50,6 @@ const FrameOneOnePage = () => {
     { id: 'linkedin', label: 'Linkedin', icon: <LinkedIn /> },
     { id: 'pinterest', label: 'Pinterest', icon: <Pinterest /> },
   ];
-  const handleIconClick = (iconSrc, iconName) => {
-    const isSelected = selectedIcons.some(
-      (icon) => icon.src === iconSrc && icon.name === iconName
-    );
-
-    if (isSelected) {
-      setSelectedIcons(
-        selectedIcons.filter(
-          (icon) => icon.src !== iconSrc || icon.name !== iconName
-        )
-      );
-    } else {
-      setSelectedIcons([...selectedIcons, { src: iconSrc, name: iconName }]);
-    }
-  };
 
   useEffect(() => {
     localStorage.setItem("reseauxsociaux", JSON.stringify(selectedIcons));

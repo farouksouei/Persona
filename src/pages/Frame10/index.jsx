@@ -5,8 +5,22 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import PDFContent from "./PDFContent";
 import {TextField} from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import {LinkedIn, Pinterest, Telegram, WhatsApp} from "@mui/icons-material";
 
 const FrameTen = () => {
+  const socialMediaIcons = [
+    { id: 'facebook', label: 'Facebook', icon: <FacebookIcon style={{ fontSize: '24px' }}/> },
+    { id: 'twitter', label: 'Twitter', icon: <TwitterIcon style={{ fontSize: '24px' }}/> },
+    { id: 'instagram', label: 'Instagram', icon: <InstagramIcon style={{ fontSize: '24px' }}/> },
+    { id: 'whatapp', label: 'Whatapp', icon: <WhatsApp style={{ fontSize: '24px' }}/> },
+    { id: 'telegram', label: 'Telegram', icon: <Telegram style={{ fontSize: '24px' }}/> },
+    { id: 'linkedin', label: 'Linkedin', icon: <LinkedIn style={{ fontSize: '24px' }}/> },
+    { id: 'pinterest', label: 'Pinterest', icon: <Pinterest style={{ fontSize: '24px' }}/> },
+  ];
+
   const [name, setName] = useState("");
   const [ageRange, setAgeRange] = useState("");
   const [intitulePoste, setPoste] = useState("");
@@ -43,6 +57,7 @@ const FrameTen = () => {
   const [revenuAnnuel, setRevenuAnnuel] = React.useState('');
   const [residence, setResidence] = React.useState('');
   const [groupedData, setGroupedData] = useState({});
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState([]);
 
   useEffect(() => {
     // Fetch data from local storage
@@ -50,6 +65,13 @@ const FrameTen = () => {
     if (storedData) {
       const grouped = groupDataByTitle(storedData);
       setGroupedData(grouped);
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedSelectedSocialMedia = localStorage.getItem('selectedSocialMedia');
+    if (storedSelectedSocialMedia) {
+      setSelectedSocialMedia(JSON.parse(storedSelectedSocialMedia));
     }
   }, []);
 
@@ -417,6 +439,8 @@ const FrameTen = () => {
     localStorage.removeItem("operateurUtilise");
     localStorage.removeItem("revenuAnnuel");
     localStorage.removeItem("residence");
+    localStorage.removeItem("selectedSocialMedia");
+    localStorage.removeItem("fullSelectedItems");
   };
 
   // Call deleteLocalStorageItems() to delete all the items
@@ -466,11 +490,6 @@ const FrameTen = () => {
     });
     deleteLocalStorageItems()
   };
-
-
-
-
-
 
   return (
     <>
@@ -649,6 +668,26 @@ const FrameTen = () => {
                   >
                     {niveauEtudee}
                   </Text>
+                  <Line className="bg-indigo-100_01 h-px mt-[15px] w-full" />
+                  <Text
+                      className="md:ml-[0] mt-[7px] text-base text-center text-indigo-600"
+                      size="txtLibreBaskervilleRegular16"
+                  >
+                    <>Resaux Sociaux</>
+                  </Text>
+                  <div style={{ display: 'flex', justifyContent: 'space-around',margin:'5px' }}>
+                    {selectedSocialMedia.map((socialMediaId) => {
+                      const selectedIcon = socialMediaIcons.find((icon) => icon.id === socialMediaId);
+                      if (selectedIcon) {
+                        return (
+                            <div key={selectedIcon.id} style={{ marginRight: '10px' }}>
+                              {React.cloneElement(selectedIcon.icon, { style: { color: '#8387A1' } })}
+                            </div>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
                   <Line className="bg-indigo-100_01 h-px mt-[15px] w-full" />
                   <Text
                     className="md:ml-[0]  mt-[7px] text-base text-center text-indigo-600"
@@ -945,11 +984,11 @@ const FrameTen = () => {
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                 <div
                     id="FrameTenThree"
-                    className=" bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full sm:h-[1209px] h-[1375px] md:h-[2553px] md:px-5 relative w-full rounded-[10px]"
+                    className="flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5  w-full sm:h-[1209px] md:h-[2553px] relative w-full rounded-[10px]"
                 >
                   <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                     <Text
-                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        className="max-w-[250px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
                     >
                       Les centres d'interet de ce persona :
@@ -964,25 +1003,21 @@ const FrameTen = () => {
                     </Text>
 
                   </div>
+                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
+                    <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
+                           placeholder="Saisir quelques choses"
+                    />
+                    <input
+                        type="text"
+                        className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                        placeholder="Saisir une source"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                        style={{ border: 'none' }}
 
+                    />
+                  </div>
+                  <hr></hr><hr></hr>
                 </div>
-                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
-                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
-                <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
-                  <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
-                         placeholder="Saisir quelques choses"
-                  />
-                  <input
-                      type="text"
-                      className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
-                      placeholder="Saisir une source"
-                      size="txtLibreBaskervilleRegular16Indigo60077"
-                      style={{ border: 'none' }}
-
-                  />
-                </div>
-                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
-                <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                 <div className="flex flex-col font-bebasneue items-center justify-start outline-[5px] outline-dashed outline-white-A700 p-[43px] md:px-10 sm:px-5 rounded-[10px] w-full" onClick={handleClick}>
                   <Text
                       className="mb-[11px] text-center text-white-A700 text-xl"
@@ -993,6 +1028,7 @@ const FrameTen = () => {
                 </div>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
+
 
               </div>
             </div>
