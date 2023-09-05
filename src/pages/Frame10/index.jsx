@@ -767,7 +767,7 @@ const FrameTen = () => {
                         >
                           Moyen de communication préféré (Operateur)
                         </Text>
-
+                        <Line className="bg-azrag-100 h-px w-full" />
                           <Text
                             className="text-base text-indigo-600 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
@@ -782,7 +782,7 @@ const FrameTen = () => {
                           size="txtLibreBaskervilleRegular16"
                         >
                              Revenu Annuel                     </Text>
-
+                        <Line className="bg-azrag-100 h-px w-full" />
                         <Text
                             className="text-base text-indigo-600 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
@@ -798,6 +798,7 @@ const FrameTen = () => {
                         >
                           Residence
                         </Text>
+                        <Line className="bg-azrag-100 h-px w-full" />
                         <input
                           type="text"
                           className="input-colomun text-base text-indigo-600 w-[200px] bg-bared-100"
@@ -814,6 +815,7 @@ const FrameTen = () => {
                         >
                           Est-ce que le produit/service concerne un persona dont l'anniversaire se situe dans 61 à 90 jours ?
                         </Text>
+                        <Line className="bg-azrag-100 h-px w-full" />
                         <input
                           type="text"
                           className="text-base text-indigo-600 w-[200px] bg-bared-100"
@@ -830,6 +832,7 @@ const FrameTen = () => {
                         >
                           Quelle est la station de radio que votre persona écoute ?
                         </Text>
+                        <Line className="bg-azrag-100 h-px w-full" />
                         <input
                             type="text"
                             className="text-base text-indigo-600 w-[200px] bg-bared-100"
@@ -846,6 +849,7 @@ const FrameTen = () => {
                         >
                           Quelle est la chaîne de télévision que votre persona regarde ?
                         </Text>
+                        <Line className="bg-azrag-100 h-px w-full" />
                         <input
                             type="text"
                             className="text-base text-indigo-600 w-[200px] bg-bared-100"
@@ -862,6 +866,7 @@ const FrameTen = () => {
                       >
                         Quels sont les médias digitaux que votre persona suit ?
                       </Text>
+                      <Line className="bg-azrag-100 h-px w-full" />
                       <input
                           type="text"
                           className="text-base text-indigo-600 w-[200px] bg-bared-100"
@@ -878,6 +883,7 @@ const FrameTen = () => {
                         >
                           Le niveau d'etude de votre persona est :
                         </Text>
+                        <Line className="bg-azrag-100 h-px w-full" />
                         <Text
                             className="text-base text-indigo-600 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
@@ -902,6 +908,7 @@ const FrameTen = () => {
                     >
                       systeme Exploitation de telephone
                     </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
                     <Text
                         className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
@@ -917,6 +924,7 @@ const FrameTen = () => {
                     >
                       utilization de telephone portable
                     </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
                     <Text
                         className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
@@ -931,6 +939,7 @@ const FrameTen = () => {
                     >
                       Est-ce que votre persona est un fan de football ?
                     </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
                     <Text
                         className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
@@ -945,6 +954,7 @@ const FrameTen = () => {
                     >
                       Le Compotement de votre persona est :
                     </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
                     <Text
                         className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
@@ -966,6 +976,7 @@ const FrameTen = () => {
                     >
                       Les centres d'interet de ce persona :
                     </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
                     <Text size="txtLibreBaskervilleRegular16Indigo60077" className="text-base text-indigo-600 w-[200px] bg-transparent border-none text-blue-gray-600 font-serif w-full min-h-[100px] whitespace-pre-wrap p-4">
                       {Object.keys(groupedData).map(title => (
                           <React.Fragment key={title}>
