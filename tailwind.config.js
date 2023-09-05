@@ -45,6 +45,8 @@ module.exports = {
         gray: { 800: "#6c3d22" },
         white: { A700: "#ffffff" },
         orange: { 200: "#e8c688" },
+        azrag: { 100: "#083164" },
+        bared: { 100: "#dae0ff" },
       },
       fontFamily: {
         bebasneue: "Bebas Neue",

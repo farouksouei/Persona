@@ -503,12 +503,12 @@ const FrameTen = () => {
           console.log(groupedData)
           const items = countItems(groupedData); // Replace with the actual number of items you have
           console.log(items)
-          const minScalingFactor = 0.4;
-          const scalingFactortwo = items < 4 ? minScalingFactor : minScalingFactor + (items - 4) * 0.05;
+          const minScalingFactor = 0.28;
+          const scalingFactortwo = items < 1 ? minScalingFactor : minScalingFactor + (items - 1) * 0.05;
           console.log(scalingFactortwo)
           const pageContents = [
             { image: imgData1, x: -15, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * (scalingFactor - 0.15) },
-            { image: imgData2, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.8 },
+            { image: imgData2, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.7 },
             { image: imgData3, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * scalingFactortwo },
           ];
 
@@ -582,7 +582,7 @@ const FrameTen = () => {
               >
                 Vue d'ensemble du persona
               </Text>
-              <button className="bg-white-A700 cursor-pointer leading-[normal] min-w-[158px] ml-[650px] sm:ml-[0] sm:mt-0 mt-[9px] py-3.5 rounded-[5px] text-center text-indigo-900 text-sm" onClick={exportPDF}>
+              <button className="bg-bared-100 cursor-pointer leading-[normal] min-w-[158px] ml-[650px] sm:ml-[0] sm:mt-0 mt-[9px] py-3.5 rounded-[5px] text-center text-indigo-900 text-sm" onClick={exportPDF}>
                 télécharger
               </button>
             </div>
@@ -594,7 +594,7 @@ const FrameTen = () => {
             <div
               className="absolute flex md:flex-col flex-row font-librebaskerville gap-3 inset-x-[0] items-start justify-center mx-auto top-[0] w-[63%]"
             >
-              <div className="bg-blue_gray-100 flex flex-col gap-[9px] items-center justify-start mb-[359px] pb-3.5 rounded-[10px] w-[27%] md:w-full">
+              <div className="bg-bared-100 flex flex-col gap-[9px] items-center justify-start mb-[359px] pb-3.5 rounded-[10px] w-[27%] md:w-full">
                 {selectedAvatar ? (
                   <Img
                     src={selectedAvatar}
@@ -609,7 +609,7 @@ const FrameTen = () => {
                   />
                 )}
                 <div className="flex flex-col justify-start w-full">
-                  <Line className="bg-indigo-100_01 h-px w-full" />
+                  <Line className="bg-bared-100 h-px w-full" />
                   <Text
                     className="md:ml-[0] mt-[7px] text-base text-center text-indigo-600"
                     size="txtLibreBaskervilleRegular16"
@@ -618,7 +618,7 @@ const FrameTen = () => {
                   </Text>
                   <input
                     type="text"
-                    className="md:ml-[0] mt-[11px] text-base text-center text-indigo-600_77 bg-blue_gray-100"
+                    className="md:ml-[0] mt-[11px] text-base text-center text-indigo-600 bg-bared-100"
                     size="txtLibreBaskervilleRegular16Indigo60077"
                     placeholder="Saisir un nom"
                     style={{ border: 'none' }}
@@ -634,7 +634,7 @@ const FrameTen = () => {
                   </Text>
                   <input
                     type="text"
-                    className="md:ml-[0] mt-[11px] text-base text-center text-indigo-600_77 bg-blue_gray-100"
+                    className="md:ml-[0] mt-[11px] text-base text-center text-indigo-600 bg-bared-100"
                     size="txtLibreBaskervilleRegular16Indigo60077"
                     placeholder="Saisir intitulé de poste"
                     style={{ border: 'none' }}
@@ -649,7 +649,7 @@ const FrameTen = () => {
                   </Text>
                   <input
                       type="text"
-                      className="md:ml-[0] mt-[11px] text-base text-center text-indigo-600_77 bg-blue_gray-100"
+                      className="md:ml-[0] mt-[11px] text-base text-center text-indigo-600 bg-bared-100"
                       size="txtLibreBaskervilleRegular16Indigo60077"
                       placeholder="Saisir intitulé de poste"
                       style={{ border: 'none' }}
@@ -665,7 +665,7 @@ const FrameTen = () => {
                     Âge
                   </Text>
                   <Text
-                    className="md:ml-[0]  mt-1.5 text-base text-center text-indigo-600_77"
+                    className="md:ml-[0]  mt-1.5 text-base text-center text-indigo-600"
                     size="txtLibreBaskervilleRegular16Indigo60077"
                   >
                     {ageRangeLabels[ageRange]}
@@ -686,7 +686,7 @@ const FrameTen = () => {
                             Enfants
                         </Text>
                         <Text
-                            className="md:ml-[0]mt-3 text-base text-center text-indigo-600_77"
+                            className="md:ml-[0]mt-3 text-base text-center text-indigo-600"
                             size="txtLibreBaskervilleRegular16Indigo60077"
                         >
                             {childrenAges}
@@ -701,7 +701,7 @@ const FrameTen = () => {
                     <>Niveau d&#39;études</>
                   </Text>
                   <Text
-                    className=" text-base text-center text-indigo-600_77"
+                    className=" text-base text-center text-indigo-600"
                     size="txtLibreBaskervilleRegular16Indigo60077"
                   >
                     {niveauEtudee}
@@ -720,7 +720,7 @@ const FrameTen = () => {
                       if (selectedIcon) {
                         return (
                             <div key={selectedIcon.id} style={{ marginRight: '10px' }}>
-                              {React.cloneElement(selectedIcon.icon, { style: { color: '#8387A1' } })}
+                              {React.cloneElement(selectedIcon.icon, { style: { color: '#083164' } })}
                             </div>
                         );
                       }
@@ -736,7 +736,7 @@ const FrameTen = () => {
                     <>Secteur d'activités</>
                   </Text>
                   <Text
-                    className="md:ml-[0] mt-[7px] text-base text-center text-indigo-600_77"
+                    className="md:ml-[0] mt-[7px] text-base text-center text-indigo-600"
                     size="txtLibreBaskervilleRegular16Indigo60077"
                   >
                     {secteurActivite}
@@ -749,7 +749,7 @@ const FrameTen = () => {
                     Taille d’entreprise
                   </Text>
                   <Text
-                    className="md:ml-[0] mt-[5px] text-base text-center text-indigo-600_77"
+                    className="md:ml-[0] mt-[5px] text-base text-center text-indigo-600"
                     size="txtLibreBaskervilleRegular16Indigo60077"
                   >
                     {tailleEntrepriseLabel[tailleEntreprise]}
@@ -760,7 +760,7 @@ const FrameTen = () => {
                 <div className="flex flex-col gap-[19px] items-center justify-start w-full">
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="gap-3 md:gap-5 grid md:grid-cols-1 grid-cols-2 justify-center min-h-[auto] w-full">
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                           size="txtLibreBaskervilleRegular16"
@@ -769,14 +769,14 @@ const FrameTen = () => {
                         </Text>
 
                           <Text
-                            className="text-base text-indigo-600_77 w-[200px]"
+                            className="text-base text-indigo-600 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
                           >
                             {operateurUtilise}
                           </Text>
 
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                           size="txtLibreBaskervilleRegular16"
@@ -784,14 +784,14 @@ const FrameTen = () => {
                              Revenu Annuel                     </Text>
 
                         <Text
-                            className="text-base text-indigo-600_77 w-[200px]"
+                            className="text-base text-indigo-600 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
                         >
                           {revenuAnnuel}
                         </Text>
 
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                           size="txtLibreBaskervilleRegular16"
@@ -800,14 +800,14 @@ const FrameTen = () => {
                         </Text>
                         <input
                           type="text"
-                          className="input-colomun text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                          className="input-colomun text-base text-indigo-600 w-[200px] bg-bared-100"
                           size="txtLibreBaskervilleRegular16Indigo60077"
                           placeholder="Saisir un objectif"
                           style={{ border: 'none' }}
                           value={residence}
                         />
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                           size="txtLibreBaskervilleRegular16"
@@ -816,14 +816,14 @@ const FrameTen = () => {
                         </Text>
                         <input
                           type="text"
-                          className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                          className="text-base text-indigo-600 w-[200px] bg-bared-100"
                           size="txtLibreBaskervilleRegular16Indigo60077"
                           placeholder="Saisir un hiérarchique"
                           style={{ border: 'none' }}
                           value={anniversaire}
                         />
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
                             className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                             size="txtLibreBaskervilleRegular16"
@@ -832,29 +832,29 @@ const FrameTen = () => {
                         </Text>
                         <input
                             type="text"
-                            className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                            className="text-base text-indigo-600 w-[200px] bg-bared-100"
                             size="txtLibreBaskervilleRegular16Indigo60077"
                             style={{ border: 'none' }}
                             value={informationsPersonnelles2}
                             disabled={true}
                         />
                       </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
-                            className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100"
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-bared-100"
                             size="txtLibreBaskervilleRegular16"
                         >
                           Quelle est la chaîne de télévision que votre persona regarde ?
                         </Text>
                         <input
                             type="text"
-                            className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                            className="text-base text-indigo-600 w-[200px] bg-bared-100"
                             size="txtLibreBaskervilleRegular16Indigo60077"
                             style={{ border: 'none' }}
                             value={informationsPersonnelles3}
                             disabled={true}
                         />
-                      </div><div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      </div><div className="bg-bared-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
 
                       <Text
                           className="max-w-[224px] md:max-w-full text-base text-indigo-600"
@@ -864,22 +864,22 @@ const FrameTen = () => {
                       </Text>
                       <input
                           type="text"
-                          className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                          className="text-base text-indigo-600 w-[200px] bg-bared-100"
                           size="txtLibreBaskervilleRegular16Indigo60077"
                           style={{ border: 'none' }}
                           value={informationsPersonnelles4}
                           disabled={true}
                       />
                     </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                      <div className="bg-bared-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
-                            className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100"
+                            className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-bared-100"
                             size="txtLibreBaskervilleRegular16"
                         >
                           Le niveau d'etude de votre persona est :
                         </Text>
                         <Text
-                            className="text-base text-indigo-600_77 w-[200px]"
+                            className="text-base text-indigo-600 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
                         >
                           {niveauEtudee}
@@ -893,9 +893,9 @@ const FrameTen = () => {
 
                 <div
                     id="FrameTenTwo"
-                    className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full"
+                    className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full"
                 >
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                     <Text
                         className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
@@ -903,14 +903,14 @@ const FrameTen = () => {
                       systeme Exploitation de telephone
                     </Text>
                     <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
+                        className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                     >
                       {systemeExploitationMobile}
                     </Text>
                   </div>
 
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                     <Text
                         className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
@@ -918,13 +918,13 @@ const FrameTen = () => {
                       utilization de telephone portable
                     </Text>
                     <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
+                        className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                     >
                       {useMobile}
                     </Text>
                   </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                     <Text
                         className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
@@ -932,13 +932,13 @@ const FrameTen = () => {
                       Est-ce que votre persona est un fan de football ?
                     </Text>
                     <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
+                        className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                     >
                       {football}
                     </Text>
                   </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                     <Text
                         className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
@@ -946,7 +946,7 @@ const FrameTen = () => {
                       Le Compotement de votre persona est :
                     </Text>
                     <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
+                        className="text-base text-indigo-600 w-[200px]"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                     >
                       {comportement}
@@ -959,14 +959,14 @@ const FrameTen = () => {
                     id="FrameTenThree"
                     className="flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5  w-full sm:h-[1209px] md:h-[2553px] relative w-full rounded-[10px]"
                 >
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                     <Text
                         className="max-w-[250px] md:max-w-full text-base text-indigo-600"
                         size="txtLibreBaskervilleRegular16"
                     >
                       Les centres d'interet de ce persona :
                     </Text>
-                    <Text size="txtLibreBaskervilleRegular16Indigo60077" className="text-base text-indigo-600_77 w-[200px] bg-transparent border-none text-blue-gray-600 font-serif w-full min-h-[100px] whitespace-pre-wrap p-4">
+                    <Text size="txtLibreBaskervilleRegular16Indigo60077" className="text-base text-indigo-600 w-[200px] bg-transparent border-none text-blue-gray-600 font-serif w-full min-h-[100px] whitespace-pre-wrap p-4">
                       {Object.keys(groupedData).map(title => (
                           <React.Fragment key={title}>
                             {`${title}:\n${groupedData[title].join('\n')}`}
@@ -976,13 +976,13 @@ const FrameTen = () => {
                     </Text>
 
                   </div>
-                  <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
-                    <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
+                    <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-bared-100" size="txtLibreBaskervilleRegular16"
                            placeholder="Saisir le nom d'une rubrique specifique"
                     />
                     <input
                         type="text"
-                        className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
+                        className="text-base text-indigo-600 w-[200px] bg-bared-100"
                         placeholder="Saisir le contenu d'une rubrique specifique"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                         style={{ border: 'none' }}
