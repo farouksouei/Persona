@@ -443,7 +443,37 @@ const FrameTen = () => {
     localStorage.removeItem("fullSelectedItems");
   };
 
-  // Call deleteLocalStorageItems() to delete all the items
+  function countItems(data) {
+    let totalCount = 0;
+
+    // Iterate through the object properties
+    for (const category in data) {
+      if (data.hasOwnProperty(category)) {
+        const subcategories = data[category];
+
+        // Add the number of items in each subcategory to the totalCount
+        totalCount += subcategories.length;
+      }
+    }
+
+    return totalCount;
+  }
+
+  function cropImage(imageData, cropHeight) {
+    // Create a temporary canvas element
+    const tempCanvas = document.createElement('canvas');
+    const tempContext = tempCanvas.getContext('2d');
+
+    // Set the canvas dimensions to match the image size
+    tempCanvas.width = imageData.width;
+    tempCanvas.height = imageData.height - cropHeight; // Remove the last 100 pixels
+
+    // Draw the image data on the canvas with cropping
+    tempContext.putImageData(imageData, 0, 0);
+
+    // Return the cropped image data URL
+    return tempCanvas.toDataURL('image/png');
+  }
 
   const exportPDF = () => {
     const input = document.getElementById("FrameTen");
@@ -463,16 +493,25 @@ const FrameTen = () => {
           const imgWidth = pdf.internal.pageSize.getWidth();
           const imgHeight = (canvas1.height * imgWidth) / canvas1.width;
           const scalingFactor = 1.2;
-          const imgData1 = canvas1.toDataURL('image/png');
+          const imageData1 = canvas1.getContext('2d').getImageData(0, 0, canvas1.width, canvas1.height);
+          const imgData1 = cropImage(imageData1, 300);
           const imgData2 = canvas2.toDataURL('image/png');
           const imgData3 = canvas3.toDataURL('image/png');
           const topMargin = 40;
-
+          const initialHeight = 0.65; // Initial height scaling factor for 11 items
+          const targetHeight = 0.4; // Target height scaling factor for 4 items
+          console.log(groupedData)
+          const items = countItems(groupedData); // Replace with the actual number of items you have
+          console.log(items)
+          const minScalingFactor = 0.4;
+          const scalingFactortwo = items < 4 ? minScalingFactor : minScalingFactor + (items - 4) * 0.05;
+          console.log(scalingFactortwo)
           const pageContents = [
-            { image: imgData1, x: -10, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * scalingFactor },
-            { image: imgData2, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.9 },
-            { image: imgData3, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.55 },
+            { image: imgData1, x: -15, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * (scalingFactor - 0.15) },
+            { image: imgData2, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.8 },
+            { image: imgData3, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * scalingFactortwo },
           ];
+
 
           // Loop through each page content and add it to the PDF
           pageContents.forEach((content, index) => {
@@ -488,7 +527,6 @@ const FrameTen = () => {
         });
       });
     });
-    deleteLocalStorageItems()
   };
 
   return (
@@ -675,6 +713,7 @@ const FrameTen = () => {
                   >
                     <>Resaux Sociaux</>
                   </Text>
+                  <br></br>
                   <div style={{ display: 'flex', justifyContent: 'space-around',margin:'5px' }}>
                     {selectedSocialMedia.map((socialMediaId) => {
                       const selectedIcon = socialMediaIcons.find((icon) => icon.id === socialMediaId);
@@ -688,6 +727,7 @@ const FrameTen = () => {
                       return null;
                     })}
                   </div>
+                  <br></br>
                   <Line className="bg-indigo-100_01 h-px mt-[15px] w-full" />
                   <Text
                     className="md:ml-[0]  mt-[7px] text-base text-center text-indigo-600"
@@ -785,23 +825,6 @@ const FrameTen = () => {
                       </div>
                       <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
-                          className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100"
-                          size="txtLibreBaskervilleRegular16"
-                        >
-                          Sources d'information
-                        </Text>
-                        <input
-                          type="text"
-                          className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
-                          placeholder="Saisir une source"
-                          size="txtLibreBaskervilleRegular16Indigo60077"
-                          style={{ border: 'none' }}
-                          value={informationsPersonnelles}
-                          onChange={handleInformationChange}
-                        />
-                      </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[17px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                        <Text
                             className="max-w-[224px] md:max-w-full text-base text-indigo-600"
                             size="txtLibreBaskervilleRegular16"
                         >
@@ -853,51 +876,15 @@ const FrameTen = () => {
                             className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100"
                             size="txtLibreBaskervilleRegular16"
                         >
-                            Quels sont les médias digitaux que votre persona suit ?
+                          Le niveau d'etude de votre persona est :
                         </Text>
-                        <input
-                            type="text"
-                            className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
-                            size="txtLibreBaskervilleRegular16Indigo60077"
-                            style={{ border: 'none' }}
-                            value={informationsPersonnelles3}
-                            disabled={true}
-                        />
-                      </div>
-                      <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
                         <Text
-                          className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                          size="txtLibreBaskervilleRegular16"
-                        >
-                          Princiaux défis
-                        </Text>
-                        {defis.length > 0 ? (
-                          // Render the text based on the state value
-                          defis.map((defi, index) => (
-                            <Text
-                              key={index}
-                              className="text-base text-indigo-600_77 w-[200px]"
-                              size="txtLibreBaskervilleRegular16Indigo60077"
-                            >
-                              {defi}
-                            </Text>
-                          ))
-                        ) : (
-                          <Text
-                            className="text-base text-indigo-600_77 w-[300px]"
+                            className="text-base text-indigo-600_77 w-[200px]"
                             size="txtLibreBaskervilleRegular16Indigo60077"
-                          >
-                            Tu dois côcher
-                          </Text>
-                        )}
-                        <Text
-                          className="text-base text-indigo-600_77 w-[200px]"
-                          size="txtLibreBaskervilleRegular16Indigo60077"
                         >
-                          {defisOption}
+                          {niveauEtudee}
                         </Text>
                       </div>
-
                     </div>
                     <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                   </div>
@@ -965,20 +952,6 @@ const FrameTen = () => {
                       {comportement}
                     </Text>
                   </div>
-                  <div className=" relative w-full bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
-                    <Text
-                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
-                        size="txtLibreBaskervilleRegular16"
-                    >
-                      Le niveau d'etude de votre persona est :
-                    </Text>
-                    <Text
-                        className="text-base text-indigo-600_77 w-[200px]"
-                        size="txtLibreBaskervilleRegular16Indigo60077"
-                    >
-                      {niveauEtudee}
-                    </Text>
-                  </div>
                 </div>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
                 <hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr><hr></hr>
@@ -1005,12 +978,12 @@ const FrameTen = () => {
                   </div>
                   <div className="bg-blue_gray-100 flex flex-1 flex-col gap-[7px] h-[246px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full" style={{ display: showSecondDiv ? 'block' : 'none' }}>
                     <input className="max-w-[224px] md:max-w-full text-base text-indigo-600 bg-blue_gray-100" size="txtLibreBaskervilleRegular16"
-                           placeholder="Saisir quelques choses"
+                           placeholder="Saisir le nom d'une rubrique specifique"
                     />
                     <input
                         type="text"
                         className="text-base text-indigo-600_77 w-[200px] bg-blue_gray-100"
-                        placeholder="Saisir une source"
+                        placeholder="Saisir le contenu d'une rubrique specifique"
                         size="txtLibreBaskervilleRegular16Indigo60077"
                         style={{ border: 'none' }}
 
