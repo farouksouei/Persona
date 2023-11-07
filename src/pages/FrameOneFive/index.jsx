@@ -23,20 +23,19 @@ const FrameOneFivePage = () => {
   return (
     <>
       <div
-        className="bg-indigo_100 flex flex-col font-inter items-center justify-start mx-auto p-[45px] md:px-20 sm:px-5 shadow-bs w-full "
-        display="flex"
-        style={{
-          backgroundImage: `url("images/frameHomeBackground.png")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+          className="bg-indigo_100 flex flex-col font-inter items-center justify-start mx-auto p-[70px] md:px-20 sm:px-5 shadow-bs w-full"
+          style={{
+            backgroundImage: `url("images/frameHomeBackground.png")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "100vh", // Set the height to 100% of the viewport height
+            width: "100%", // Set the width to 100%
+            position: "fixed", // Position the div fixed to cover the entire viewport
+            top: 0, // Position it at the top of the viewport
+            left: 0, // Position it at the left of the viewport
+            zIndex: -1, // Place it behind other content
+          }}
       >
-        <Img
-          src="images/Groupe76.png"
-          alt="groupe761"
-          max-width="200%"
-          height="auto"
-        />
         <Text
           className="font-medium mt-[17px] text-center text-white_A700"
           as="h1"
