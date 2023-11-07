@@ -93,6 +93,19 @@ const Sidebar1 = (props) => {
             {flag}
           </Text>
           <div className="flex sm:flex-col flex-row gap-[50px] items-center justify-end ml-10 md:ml-[0] mt-[200px] w-[90%] md:w-full">
+            <Img
+                src="images/img_clippathgroup.png"
+                style={{
+                  position: "absolute",
+                  bottom: 80,
+                  left: 40,
+                  zIndex: -1,
+                  width: "200px", // Set the desired width
+                  opacity: 0.5, // Set the opacity to 50%
+                }}
+                alt="clippathgroup"
+            />
+
             {links.map((link) => (
               <Link
                 to={link.path}
@@ -106,8 +119,6 @@ const Sidebar1 = (props) => {
                 }}
               ></Link>
             ))}
-
-
           </div>
         </div>
       </Sidebar>
