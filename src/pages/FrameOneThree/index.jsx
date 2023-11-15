@@ -10,7 +10,11 @@ import {WhatsApp} from "@mui/icons-material";
 import {Telegram} from "@mui/icons-material";
 import {LinkedIn} from "@mui/icons-material";
 import {Pinterest} from "@mui/icons-material";
+import {YouTube} from "@mui/icons-material";
 import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
 const FrameOneOnePage = () => {
   const [informationsPersonnelles, setInformation] = useState("");
   const [informationsPersonnelles2, setInformation2] = useState("");
@@ -18,6 +22,44 @@ const FrameOneOnePage = () => {
   const [informationsPersonnelles4, setInformation4] = useState("");
   const [selectedIcons, setSelectedIcons] = useState([]);
   const [selectedSocialMedia, setSelectedSocialMedia] = useState([]);
+  const [challenges, setChallenges] = useState('');
+  const [motivations, setMotivations] = useState('');
+  const [goals, setGoals] = useState('');
+  const [frequentLocations, setFrequentLocations] = useState('');
+  const [followedBrands, setFollowedBrands] = useState('');
+  const [selectedMedia, setSelectedMedia] = useState('');
+
+
+  const handleBrandsChange = (event) => {
+    setFollowedBrands(event.target.value);
+    localStorage.setItem("followedBrands", event.target.value);
+  };
+
+  const handleLocationsChange = (event) => {
+    setFrequentLocations(event.target.value);
+    localStorage.setItem("frequentLocations", event.target.value);
+  };
+
+  const handleMediaChange = (event) => {
+    setSelectedMedia(event.target.value);
+    localStorage.setItem("selectedMedia", event.target.value);
+  };
+
+
+  const handleChallengesChange = (event) => {
+    setChallenges(event.target.value);
+    localStorage.setItem("challenges", event.target.value);
+  };
+
+  const handleMotivationsChange = (event) => {
+    setMotivations(event.target.value);
+    localStorage.setItem("motivations", event.target.value);
+  };
+
+  const handleGoalsChange = (event) => {
+    setGoals(event.target.value);
+    localStorage.setItem("goals", event.target.value);
+  };
 
   const handleSocialMediaChange = (socialMediaId) => () => {
     setSelectedSocialMedia((prevSelected) => {
@@ -49,6 +91,7 @@ const FrameOneOnePage = () => {
     { id: 'telegram', label: 'Telegram', icon: <Telegram /> },
     { id: 'linkedin', label: 'Linkedin', icon: <LinkedIn /> },
     { id: 'pinterest', label: 'Pinterest', icon: <Pinterest /> },
+    { id: 'youtube', label: 'Youtube', icon: <YouTube /> },
   ];
 
   useEffect(() => {
@@ -81,7 +124,14 @@ const FrameOneOnePage = () => {
     const storedInformation2 = localStorage.getItem("informationsPersonnelles2");
     const storedInformation3 = localStorage.getItem("informationsPersonnelles3");
     const storedInformation4 = localStorage.getItem("informationsPersonnelles4");
+    const goals = localStorage.getItem("goals");
+    const challenges = localStorage.getItem("challenges");
+    const motivations = localStorage.getItem("motivations");
     const storedIcons = localStorage.getItem("selectedIcons");
+    const followedBrands = localStorage.getItem("followedBrands");
+    const frequentLocations = localStorage.getItem("frequentLocations");
+    const selectedMedia = localStorage.getItem("selectedMedia");
+
     if (storedIcons) {
       setSelectedSocialMedia(storedIcons)
     }
@@ -96,6 +146,27 @@ const FrameOneOnePage = () => {
     }
     if (storedInformation4) {
         setInformation4(storedInformation4);
+    }
+
+    if (goals) {
+        setGoals(goals);
+    }
+    if (challenges) {
+        setChallenges(challenges);
+    }
+    if (motivations) {
+      setMotivations(motivations);
+    }
+
+    if (followedBrands) {
+        setFollowedBrands(followedBrands);
+    }
+
+    if (frequentLocations) {
+        setFrequentLocations(frequentLocations);
+    }
+    if (selectedMedia) {
+        setSelectedMedia(selectedMedia);
     }
   }, []);
 
@@ -160,7 +231,29 @@ const FrameOneOnePage = () => {
                         onChange={handleInformationChange2}
                     />
                   </div>
-
+                  <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                    <Text
+                        className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                        as="h5"
+                        variant="h5"
+                    >
+                      Sélectionnez les médias classiques que votre persona suit :
+                    </Text>
+                    <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                      <Select
+                          value={selectedMedia}
+                          onChange={handleMediaChange}
+                          variant="outlined"
+                          fullWidth
+                      >
+                        <MenuItem value="television">Télévision</MenuItem>
+                        <MenuItem value="radio">Radio</MenuItem>
+                        <MenuItem value="presse">Presse</MenuItem>
+                        <MenuItem value="magazines">Magazines</MenuItem>
+                        {/* Ajoutez d'autres options au besoin */}
+                      </Select>
+                    </div>
+                  </div>
                   <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                     <Text
                       className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
@@ -207,6 +300,103 @@ const FrameOneOnePage = () => {
                             value={informationsPersonnelles4}
                             onChange={handleInformationChange4}
                         />
+                      </div>
+                      <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                        <Text
+                            className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                            as="h5"
+                            variant="h5"
+                        >
+                          Quels sont les défis de votre persona ?
+                        </Text>
+                        <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                          <TextField
+                              type="text"
+                              variant="outlined"
+                              fullWidth
+                              placeholder=""
+                              value={challenges}
+                              onChange={handleChallengesChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                        <Text
+                            className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                            as="h5"
+                            variant="h5"
+                        >
+                          Quelles sont les motivations de votre persona ?
+                        </Text>
+                        <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                          <TextField
+                              type="text"
+                              variant="outlined"
+                              fullWidth
+                              placeholder=""
+                              value={motivations}
+                              onChange={handleMotivationsChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                        <Text
+                            className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                            as="h5"
+                            variant="h5"
+                        >
+                          Quels sont les objectifs de votre persona ?
+                        </Text>
+                        <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                          <TextField
+                              type="text"
+                              variant="outlined"
+                              fullWidth
+                              placeholder=""
+                              value={goals}
+                              onChange={handleGoalsChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                        <Text
+                            className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                            as="h5"
+                            variant="h5"
+                        >
+                          Marques suivies par votre persona :
+                        </Text>
+                        <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                          <TextField
+                              type="text"
+                              variant="outlined"
+                              fullWidth
+                              placeholder=""
+                              value={followedBrands}
+                              onChange={handleBrandsChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
+                        <Text
+                            className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                            as="h5"
+                            variant="h5"
+                        >
+                          Lieux fréquentés par votre persona :
+                        </Text>
+                        <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-2 w-full">
+                          <TextField
+                              type="text"
+                              variant="outlined"
+                              fullWidth
+                              placeholder=""
+                              value={frequentLocations}
+                              onChange={handleLocationsChange}
+                          />
+                        </div>
                       </div>
                       <div className="flex flex-col gap-[3px] items-start justify-start w-[815px] md:w-full">
                       <Typography variant="h5" className="font-normal mt-[90px] text-indigo-900 m-4">
