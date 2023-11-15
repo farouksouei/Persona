@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "components";
+import {Input, Text} from "components";
 import Sidebar1 from "components/Sidebar1";
+
 import {
   Slider,
   Typography,
@@ -10,7 +11,7 @@ import {
   Select,
   FormControl,
   InputLabel,
-  TextField, RadioGroup, FormControlLabel, Radio
+  TextField, RadioGroup, FormControlLabel, Radio,Button
 } from '@mui/material';
 
 const theme = createTheme();
@@ -27,12 +28,28 @@ const FrameOnePage = () => {
   const [childrenAges,setChildrenAges] = useState('')
   const [residence, setResidence] = useState("");
   const [studyRange, setStudyRange] = useState("");
+  const [chidrenNumber, setChidrenNumber] = useState(0);
 
   const handleResidenceChange = (event) => {
     setResidence(event.target.value);
     //put it in local storage
     localStorage.setItem("residence", event.target.value);
   }
+
+  const handleChildrenNumberChange = (event) => {
+    const newValue = Math.min(Math.max(0, parseInt(event.target.value) || 0), 20);
+    setChidrenNumber(newValue);
+    //put it in local storage
+    localStorage.setItem("childrenNumber", newValue);
+  }
+
+  const handleIncrement = () => {
+    setChildrenNumber((prevValue) => Math.min(prevValue + 1, 20));
+  };
+
+  const handleDecrement = () => {
+    setChildrenNumber((prevValue) => Math.max(prevValue - 1, 0));
+  };
 
 
   const arrayyy = [
@@ -80,6 +97,7 @@ const FrameOnePage = () => {
       ]
 
   const handleOnChangeChildrenAges = (event) => {
+    console.log(event.target.value)
       setChildrenAges(event.target.value)
       //put it in local storage
         localStorage.setItem("childrenAges", event.target.value);
@@ -187,6 +205,8 @@ const FrameOnePage = () => {
     }
   }, [studyRange]);
 
+
+
   const ageRangeLabels = [
     "moins 18 ans",
     "entre 18 et 24 ans",
@@ -197,12 +217,20 @@ const FrameOnePage = () => {
   ];
   const niveauEtude = [
     "Inférieur au bacalauréat",
+    "BTP",
     "Bacalauréat ou équivalent",
-    "Parcours universitaire non sanctionné par un diplôme",
+      "BTS ou DUT",
     "LIcense ou diplôme équivalent",
     "Master ou diplôme équivalent",
     "Doctorat",
   ];
+
+  useEffect(() => {
+    const nbrChildren = localStorage.getItem("childrenNumber");
+    if (nbrChildren) {
+      setChidrenNumber(nbrChildren);
+    }
+    }, []);
 
   return (
     <>
@@ -378,14 +406,28 @@ const FrameOnePage = () => {
                           <MenuItem value="Parents avec enfants de +18 ans Adultes">Parents avec enfants de +18 ans Adultes</MenuItem>
                         </Select>
                       </FormControl>
+                      <div>
+                        <Typography variant="h5" className="font-normal text-indigo-900 mt-4">
+                          Combien d'enfants avez-vous?
+                        </Typography>
+                        <FormControl className="mt-4" fullWidth>
+                          <Typography variant="h6" className="font-normal text-indigo-900 mt-4">
+                            {childrenNumber}
+                          </Typography>
+                        </FormControl>
+                        <div className="mt-2">
+                          <Button variant="outlined" onClick={handleDecrement} className="m-2">
+                            -
+                          </Button>
+                          <Button variant="outlined" onClick={handleIncrement} className="m-2">
+                            +
+                          </Button>
+                        </div>
+                      </div>
                     </>
                 )}
               </div>
-
-
             </div>
-
-
             <div className="flex items-center justify-end mt-[40px] ml-1.5 md:ml-[0] md:mt-0 w-4/5">
               <Text
                   className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-1.5 rounded-[10px] text-blue_gray_400_01 text-center w-10"

@@ -56,7 +56,7 @@ const FrameOneTwoPage = () => {
         "Technology (Computer and electronics)",
         "Sports and outdoors",
         "Hobbies and activities",
-        "Shopping & Fashion",
+        "Fashion, Shopping & Beauty",
         "Fitness & Wellness (fitness)",
         "Family & Relationship",
         "Entertainment (Leisure)",
@@ -86,7 +86,7 @@ const FrameOneTwoPage = () => {
       'Celebrity Fan/Gossip',
       'Fine Art',
     ],
-    "Shopping & Fashion": [
+    "Fashion, Shopping & Beauty": [
       'Apparel',
       'Beauty',
       'Fashion',

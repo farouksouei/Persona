@@ -23,6 +23,7 @@ const secteurActiviteOptions = [
   "Agriculture",
   "Construction",
   "Alimentation et besoin",
+    "Autre"
 ];
 
 const FrameOneFourPage = () => {
