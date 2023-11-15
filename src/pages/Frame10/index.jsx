@@ -55,9 +55,17 @@ const FrameTen = () => {
   const [niveauEtudee, setNiveauEtudee] = React.useState('');
   const [operateurUtilise, setOperateurUtilise] = React.useState('');
   const [revenuAnnuel, setRevenuAnnuel] = React.useState('');
-  const [residence, setResidence] = React.useState('');
   const [groupedData, setGroupedData] = useState({});
   const [selectedSocialMedia, setSelectedSocialMedia] = useState([]);
+  const [residence, setResidence] = useState('');
+  const [challenges, setChallenges] = useState('');
+  const [motivations, setMotivations] = useState('');
+  const [goals, setGoals] = useState('');
+  const [followedBrands, setFollowedBrands] = useState('');
+  const [frequentLocations, setFrequentLocations] = useState('');
+  const [residenceLocation, setResidenceLocation] = useState('');
+
+  const [demenagement, setDemenagement] = useState('');
 
   useEffect(() => {
     // Fetch data from local storage
@@ -168,6 +176,13 @@ const FrameTen = () => {
     const storedChildrenAges = localStorage.getItem("childrenAges");
     const storedHasChildren = localStorage.getItem("hasChildren");
     const storedSituation = localStorage.getItem("situation");
+    const storedGoals = localStorage.getItem("goals");
+    const storedMotivations = localStorage.getItem("motivations");
+    const storedChallenges = localStorage.getItem("challenges");
+    const storedFollowedBrands = localStorage.getItem("followedBrands");
+    const storedFrequentLocations = localStorage.getItem("frequentLocations");
+    const storedResidenceLocation = localStorage.getItem("residenceLocation");
+    const storedDemenagement = localStorage.getItem("demenagement");
     if (storedChildrenAges) {
         setChildrenAges(storedChildrenAges);
     }
@@ -206,6 +221,27 @@ const FrameTen = () => {
     }
     if (storedInformation4) {
         setInformation4(storedInformation4);
+    }
+    if (storedGoals) {
+        setGoals(storedGoals);
+    }
+    if (storedMotivations) {
+        setMotivations(storedMotivations);
+    }
+    if (storedChallenges) {
+        setChallenges(storedChallenges);
+    }
+    if (storedFollowedBrands) {
+        setFollowedBrands(storedFollowedBrands);
+    }
+    if (storedFrequentLocations) {
+        setFrequentLocations(storedFrequentLocations);
+    }
+    if (storedResidenceLocation) {
+        setResidenceLocation(storedResidenceLocation);
+    }
+    if (storedDemenagement) {
+        setDemenagement(storedDemenagement);
     }
   }, []);
 
@@ -405,6 +441,7 @@ const FrameTen = () => {
       setName(storedName);
     }
   }, []);
+
   const deleteLocalStorageItems = () => {
     localStorage.removeItem("selectedAvatar");
     localStorage.removeItem("defis");
@@ -508,7 +545,7 @@ const FrameTen = () => {
           console.log(scalingFactortwo)
           const pageContents = [
             { image: imgData1, x: -15, y: topMargin, width: imgWidth * scalingFactor, height: imgHeight * (scalingFactor - 0.15) },
-            { image: imgData2, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * 0.7 },
+            { image: imgData2, x: 40, y: 15, width: imgWidth * 0.65, height: imgHeight * 1.35 },
             { image: imgData3, x: 40, y: 50, width: imgWidth * 0.65, height: imgHeight * scalingFactortwo },
           ];
 
@@ -960,6 +997,96 @@ const FrameTen = () => {
                         size="txtLibreBaskervilleRegular16Indigo60077"
                     >
                       {comportement}
+                    </Text>
+                  </div>
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      Les goals de votre persona est :
+                    </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
+                    <Text
+                        className="text-base text-indigo-600 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {goals}
+                    </Text>
+                  </div>
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      Les motivations de votre persona est :
+                    </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
+                    <Text
+                        className="text-base text-indigo-600 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {motivations}
+                    </Text>
+                  </div>
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      Les challenges de votre persona est :
+                    </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
+                    <Text
+                        className="text-base text-indigo-600 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {challenges}
+                    </Text>
+                  </div>
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      Les locations frequents de votre persona est :
+                    </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
+                    <Text
+                        className="text-base text-indigo-600 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {frequentLocations}
+                    </Text>
+                  </div>
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      la residence de votre persona est:
+                    </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
+                    <Text
+                        className="text-base text-indigo-600 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {residenceLocation}
+                    </Text>
+                  </div>
+                  <div className="bg-bared-100 flex flex-1 flex-col gap-[7px] h-[270px] md:h-auto items-start justify-start md:px-10 sm:px-5 px-[50px] py-[31px] rounded-[10px] w-full">
+                    <Text
+                        className="max-w-[224px] md:max-w-full text-base text-indigo-600"
+                        size="txtLibreBaskervilleRegular16"
+                    >
+                      est ce que votre persona a demenage recament ?
+                    </Text>
+                    <Line className="bg-azrag-100 h-px w-full" />
+                    <Text
+                        className="text-base text-indigo-600 w-[200px]"
+                        size="txtLibreBaskervilleRegular16Indigo60077"
+                    >
+                      {demenagement}
                     </Text>
                   </div>
                 </div>
