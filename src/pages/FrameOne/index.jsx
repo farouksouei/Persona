@@ -29,11 +29,18 @@ const FrameOnePage = () => {
   const [residence, setResidence] = useState("");
   const [studyRange, setStudyRange] = useState("");
   const [chidrenNumber, setChidrenNumber] = useState(0);
+  const [demenagement, setDemenagement] = useState("");
 
   const handleResidenceChange = (event) => {
     setResidence(event.target.value);
     //put it in local storage
     localStorage.setItem("residence", event.target.value);
+  }
+
+  const handleDemenagementChange = (event) => {
+    setDemenagement(event.target.value);
+    //put it in local storage
+    localStorage.setItem("demenagement", event.target.value);
   }
 
   const handleChildrenNumberChange = (event) => {
@@ -45,10 +52,12 @@ const FrameOnePage = () => {
 
   const handleIncrement = () => {
     setChildrenNumber((prevValue) => Math.min(prevValue + 1, 20));
+    localStorage.setItem("childrenNumber", childrenNumber);
   };
 
   const handleDecrement = () => {
     setChildrenNumber((prevValue) => Math.max(prevValue - 1, 0));
+    localStorage.setItem("childrenNumber", childrenNumber);
   };
 
 
@@ -232,6 +241,13 @@ const FrameOnePage = () => {
     }
     }, []);
 
+    useEffect(() => {
+        const demenagement = localStorage.getItem("demenagement");
+        if (demenagement) {
+            setDemenagement(demenagement);
+        }
+    } , []);
+
   return (
     <>
       <div className="bg-indigo_100 flex flex-col  items-center justify-start w-full"
@@ -326,6 +342,32 @@ const FrameOnePage = () => {
                         />
                     </FormControl>
                   </div>
+                </ThemeProvider>
+                <Text
+                    className="font-normal md:ml-[0] ml-[3px] mt-[85px] text-indigo_900"
+                    as="h5"
+                    variant="h5"
+                >
+                  est ce que votre persona a recement demenagé?
+                </Text>
+                <ThemeProvider theme={theme}>
+                    <div className="h-[55px] md:h-[67px] mt-[34px] relative w-[85%] md:w-full">
+                        <FormControl className="w-full">
+                            <InputLabel id="demenagement-label">Choisir une option</InputLabel>
+                            <Select
+                                labelId="demenagement-label"
+                                id="demenagement"
+                                value={demenagement}
+                                onChange={handleDemenagementChange}
+                            >
+                                <MenuItem disabled={demenagement} value="">
+                                    {'Select an option'}
+                                </MenuItem>
+                                <MenuItem value="Oui">Oui</MenuItem>
+                                <MenuItem value="Non">Non</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
                 </ThemeProvider>
                 <Text
                   className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
