@@ -47,7 +47,7 @@ const FrameOneFivePage = () => {
         </Text>
           <Img
                 src="images/img_groupe761.png"
-                className="h-[125px]"
+                className="h-[150px]"
                 alt="frameonefive"
             />
         <Text
@@ -73,11 +73,11 @@ const FrameOneFivePage = () => {
             </ThemeProvider>
           </a>
         </div>
-        <div className="font-bebasneue h-44 md:h-[px] relative w-1/4">
-          <div className="absolute items-center justify-start w-full">
+        <div className="font-bebasneue">
+          <div className="items-center justify-start">
             <Img
               src="images/img_clippathgroup.png"
-              className="h-[150px] md:h-auto object-cover w-full"
+              className="h-[150px]"
               alt="clippathgroup"
             />
           </div>
