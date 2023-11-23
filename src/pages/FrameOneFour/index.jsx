@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "components";
 import Sidebar1 from "components/Sidebar1";
-import { Slider, Select, MenuItem, FormControl, InputLabel, ThemeProvider, createTheme } from '@mui/material';
+import { Slider, Select, MenuItem, FormControl, InputLabel, ThemeProvider, createTheme,Input } from '@mui/material';
 
 const theme = createTheme();
 
@@ -29,6 +29,19 @@ const secteurActiviteOptions = [
 const FrameOneFourPage = () => {
   const [tailleEntreprise, setTaille] = useState("");
   const [secteurActivite, setSelectedOption] = useState("");
+  const [secteurActiviteAutre, setSecteurActiviteAutre] = useState("");
+
+  const handleActiviteAutreChange = (event) => {
+    setSecteurActiviteAutre(event.target.value);
+    console.log(secteurActiviteAutre)
+  }
+
+  const handleNext = (event) => {
+    debugger;
+    if (secteurActivite === "Autre") {
+      localStorage.setItem("secteurActivite", secteurActiviteAutre);
+    }
+  }
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -41,7 +54,11 @@ const FrameOneFourPage = () => {
 
   useEffect(() => {
     const storedSecteur = localStorage.getItem("secteurActivite");
-    if (storedSecteur) {
+    // check if the stored value is not null and if its not in the options list
+    if (storedSecteur && !secteurActiviteOptions.includes(storedSecteur)) {
+      setSecteurActiviteAutre(storedSecteur);
+      setSelectedOption("Autre");
+    } else if (storedSecteur) {
       setSelectedOption(storedSecteur);
     }
   }, []);
@@ -125,7 +142,19 @@ const FrameOneFourPage = () => {
                       </Select>
                     </FormControl>
                   </ThemeProvider>
-
+                  {secteurActivite === "Autre" && (
+                      <ThemeProvider theme={theme}>
+                        <FormControl className="w-full">
+                          <InputLabel id="dropdown2-label">Autre</InputLabel>
+                          <Input
+                              labelId="dropdown2-label"
+                              id="dropdown2"
+                              value={secteurActiviteAutre}
+                              onChange={handleActiviteAutreChange}
+                          />
+                        </FormControl>
+                      </ThemeProvider>
+                  )}
                 </div>
                 <Text
                   className="font-normal md:ml-[0] ml-[3px] mt-[90px] text-indigo_900"
@@ -165,11 +194,12 @@ const FrameOneFourPage = () => {
                   <>&lt;</>
                 </Text>
               </a>
-              <a href="/frameoneseven">
+              <a href="/frameoneseven" onClick={(e) => handleNext(e)}>
                 <Text
-                  className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-[11px] rounded-[10px] text-blue_gray_400 text-center w-10"
-                  as="h2"
-                  variant="h2"
+                    className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-[11px] rounded-[10px] text-blue_gray_400 text-center w-10"
+                    as="h2"
+                    variant="h2"
+                    onClick={(e) => handleNext(e)}  // Corrected onClick syntax
                 >
                   <>&gt;</>
                 </Text>
