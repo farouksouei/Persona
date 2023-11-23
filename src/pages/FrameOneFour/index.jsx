@@ -37,7 +37,6 @@ const FrameOneFourPage = () => {
   }
 
   const handleNext = (event) => {
-    debugger;
     if (secteurActivite === "Autre") {
       localStorage.setItem("secteurActivite", secteurActiviteAutre);
     }
@@ -199,7 +198,6 @@ const FrameOneFourPage = () => {
                     className="bg-indigo_100_02 flex h-10 items-center justify-center mb-[178px] ml-[11px] rounded-[10px] text-blue_gray_400 text-center w-10"
                     as="h2"
                     variant="h2"
-                    onClick={(e) => handleNext(e)}  // Corrected onClick syntax
                 >
                   <>&gt;</>
                 </Text>

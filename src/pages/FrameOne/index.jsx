@@ -429,7 +429,7 @@ const FrameOnePage = () => {
                           as="h5"
                           variant="h5"
                       >
-                        est ce que vous avez des enfants??
+                        Est-ce que votre persona a des enfants ?
                       </Text>
                       <FormControl className="mt-4 w-[199px]">
                         <InputLabel id="childrenAges">Ages des enfants</InputLabel>
