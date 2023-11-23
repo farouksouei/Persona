@@ -39,14 +39,14 @@ const FrameOneEightPage = () => {
   ];
   return (
     <>
-      <div className="bg-indigo_100_03 flex flex-col font-bebasneue items-center justify-end mx-auto p-[76px] md:px-10 sm:px-5 shadow-bs w-full"
+      <div className="bg-indigo_100_03 flex flex-col font-bebasneue items-center mx-auto md:px-15 sm:px-5 shadow-bs w-full"
         style={{
           backgroundImage: `url("images/frameHomeBackground.png")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="flex flex-col gap-[53px] items-center justify-start mt-1 w-[51%] md:w-full">
+        <div className="flex flex-col gap-[53px] items-center justify-start m-10 w-[51%] md:w-full">
           <Text
             className="font-normal text-center text-indigo_900 w-[67%] sm:w-full"
             as="h1"
@@ -138,7 +138,7 @@ const FrameOneEightPage = () => {
             </div>
             <a href="frameten">
               <button
-                className="bg-blue_gray_100 font-bebasneue h-[45px] justify-center md:ml-[0] ml-[190px] mt-44 pb-1.5 pt-0.5 sm:px-5 px-[35px] rounded-[5px] text-center text-indigo_900 w-[331px]"
+                className="bg-blue_gray_100 font-bebasneue h-[45px] justify-center md:ml-[0] ml-[190px] mt-44 pb-1.5 pt-0.5 sm:px-5 px-[35px] rounded-[5px] text-center text-indigo_900 w-[331px] m-15"
               >
                 télécharger maintenant
               </button>
