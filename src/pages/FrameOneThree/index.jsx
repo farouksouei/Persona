@@ -408,7 +408,7 @@ const FrameOneOnePage = () => {
                                 key={icon.id}
                                 onClick={handleSocialMediaChange(icon.id)}
                                 color={selectedSocialMedia.includes(icon.id) ? 'primary' : 'default'}
-                                sx={{ m: 1 ,width:'100px',height:'100px'}}
+                                sx={{ m: 0.5 ,width:'80px',height:'80px'}}
                             >
                               {icon.icon}
                             </IconButton>
