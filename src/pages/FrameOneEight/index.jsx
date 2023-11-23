@@ -39,18 +39,24 @@ const FrameOneEightPage = () => {
   ];
   return (
     <>
-      <div className="bg-indigo_100_03 flex flex-col font-bebasneue items-center mx-auto md:px-15 sm:px-5 shadow-bs w-full"
-        style={{
-          backgroundImage: `url("images/frameHomeBackground.png")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <div className="bg-indigo_100 flex flex-col font-bebasneue items-center justify-start mx-auto md:px-10 sm:px-5 shadow-bs w-full"
+           style={{
+             backgroundImage: `url("images/frameHomeBackground.png")`,
+             backgroundSize: "cover",
+             backgroundPosition: "center",
+             height: "100vh", // Set the height to 100% of the viewport height
+             width: "100%", // Set the width to 100%
+             position: "fixed", // Position the div fixed to cover the entire viewport
+             top: 0, // Position it at the top of the viewport
+             left: 0, // Position it at the left of the viewport
+             zIndex: -1, // Place it behind other content
+           }}
       >
         <div className="flex flex-col gap-[53px] items-center justify-start m-10 w-[51%] md:w-full">
           <Text
             className="font-normal text-center text-indigo_900 w-[67%] sm:w-full"
-            as="h1"
-            variant="h1"
+            as="h2"
+            variant="h2"
           >
             Saisissez vos coordonnées ci-dessous pour télécharger ou partager
             votre persona.
