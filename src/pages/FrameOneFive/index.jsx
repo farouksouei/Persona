@@ -45,6 +45,11 @@ const FrameOneFivePage = () => {
             Outil de création de persona
           </span>
         </Text>
+          <Img
+                src="images/img_groupe761.png"
+                className="h-[125px]"
+                alt="frameonefive"
+            />
         <Text
           className="mt-6 text-white_A700 text-center w-[25%] sm:w-full"
           variant="body1"
@@ -68,22 +73,22 @@ const FrameOneFivePage = () => {
             </ThemeProvider>
           </a>
         </div>
-        <div className="font-bebasneue h-44 md:h-[px] mb-[74px] mt-[30px] relative w-1/4">
-          <div className="absolute flex flex-col inset-x-[0] items-center justify-start mx-auto p-[9px] top-[0] w-full">
+        <div className="font-bebasneue h-44 md:h-[px] relative w-1/4">
+          <div className="absolute items-center justify-start w-full">
             <Img
               src="images/img_clippathgroup.png"
-              className="h-[125px] md:h-auto object-cover w-full my-2"
+              className="h-[150px] md:h-auto object-cover w-full"
               alt="clippathgroup"
             />
           </div>
-          <Text
-            className="absolute bottom-[0] inset-x-[0] mx-auto text-white_A700 text-center w-full"
-            variant="body2"
-          >
-            Copyright © 2023 lézard & balthazar communication
-          </Text>
         </div>
+          <Text
+              className="mx-auto text-white_A700 text-center w-[25%] sm:w-full"
+          >
+              Copyright © 2023 lézard & balthazar communication
+          </Text>
       </div>
+
     </>
   );
 };
