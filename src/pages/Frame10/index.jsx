@@ -183,6 +183,8 @@ const FrameTen = () => {
     const storedFrequentLocations = localStorage.getItem("frequentLocations");
     const storedResidenceLocation = localStorage.getItem("residenceLocation");
     const storedDemenagement = localStorage.getItem("demenagement");
+    const storedActivite = localStorage.getItem("secteurActivite");
+
     if (storedChildrenAges) {
         setChildrenAges(storedChildrenAges);
     }
@@ -242,6 +244,10 @@ const FrameTen = () => {
     }
     if (storedDemenagement) {
         setDemenagement(storedDemenagement);
+    }
+    if (storedActivite) {
+        setSecteur(storedActivite);
+      console.log("secteurActivite",secteurActivite)
     }
   }, []);
 
@@ -327,7 +333,7 @@ const FrameTen = () => {
     setSecteur(event.target.value);
   };
   useEffect(() => {
-    const storedSecteur = localStorage.getItem("secteurActivite");
+    const storedSecteur = localStorage.getItem("secteur");
     if (storedSecteur) {
       setSecteur(storedSecteur);
     }
@@ -335,7 +341,7 @@ const FrameTen = () => {
 
   useEffect(() => {
     if (secteurActivite !== "") {
-      localStorage.setItem("secteurActivite", secteurActivite);
+      localStorage.setItem("secteur", secteurActivite);
     }
   }, [secteurActivite]);
 
