@@ -46,8 +46,8 @@ const FrameOneFivePage = () => {
           </span>
         </Text>
           <Img
-                src="images/img_groupe761.png"
-                className="h-[150px]"
+                src="images/persona7676.png"
+                className="h-[200px]"
                 alt="frameonefive"
             />
         <Text
